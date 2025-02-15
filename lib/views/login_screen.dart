@@ -1,8 +1,7 @@
-import 'dart:convert';
-
 import 'package:cottonist/views/signup_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:get/get.dart';
+import 'package:cottonist/controller/login_controller.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({super.key});
@@ -11,44 +10,11 @@ class LoginScreen extends StatefulWidget {
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  bool isLoading = false;
+final loginController = Get.put(LoginController());
 
-  Future<void> login() async {
-    String url = 'https://www.shreshtacotton.com/api/login/';
-    setState(() {
-      isLoading = true;
-    });
-    try {
-      var response = await http.post(Uri.parse(url),
-          headers: {"Content-Type": "application/json"},
-          body: jsonEncode({
-            "email": emailController.text.trim(),
-            "password": passwordController.text.trim()
-          }));
-      // print(response.statusCode);
-      if (response.statusCode == 200) {
-        var data = jsonDecode(response.body);
-        print("Login Successful: ${data}");
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Invalid credentials, please try again.")),
-        );
-        setState(() {
-          isLoading = false;
-        });
-      }
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Something went wrong. Please try again.")),
-      );
-      setState(() {
-        isLoading = false;
-      });
-    }
-  }
+class _LoginScreenState extends State<LoginScreen> {
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
             // Logo
             Center(
               child: Image.asset(
-                'assets/logo.png',
+                'assets/images/logo.png',
                 height: screenHeight * 0.15,
                 width: screenWidth * 0.3,
               ),
@@ -101,10 +67,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                   const SizedBox(height: 15),
                   TextField(
-                    controller: emailController,
+                    controller: usernameController,
                     decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.email_outlined),
-                      labelText: "Email Address",
+                      prefixIcon: Icon(Icons.person_2_outlined),
+                      labelText: "Username",
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10)),
                     ),
@@ -126,41 +92,43 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Flexible(
-                          child: TextButton(
-                            onPressed: () {},
-                            child: const Text("Forgot Password?",
-                                style: TextStyle(color: Colors.blue)),
-                          ),
+                        TextButton(
+                          onPressed: () {},
+                          child: const Text("Forgot Password?",
+                              style: TextStyle(color: Colors.blue)),
                         ),
                       ],
                     ),
                   ),
                   SizedBox(
-                    width: double.infinity,
-                    child: isLoading
-                        ? const SizedBox(
-                            height: 30,
-                            width: 30,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2.5,
-                            ),
-                          )
-                        : ElevatedButton(
-                            onPressed: () {
-                              login();
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.blue,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10)),
-                              padding: EdgeInsets.symmetric(vertical: 12),
-                            ),
-                            child: const Text("Login Account",
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 16)),
-                          ),
-                  ),
+                      width: double.infinity,
+                      child: Obx(
+                        () => loginController.isLoading.value
+                            ? const SizedBox(
+                                height: 30,
+                                width: 30,
+                                child: Center(
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2.5,
+                                  ),
+                                ),
+                              )
+                            : ElevatedButton(
+                                onPressed: () {
+                                  loginController.login(usernameController.text,
+                                      passwordController.text);
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.blue,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10)),
+                                  padding: EdgeInsets.symmetric(vertical: 12),
+                                ),
+                                child: const Text("Login Account",
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 16)),
+                              ),
+                      )),
                   SizedBox(height: 10),
                 ],
               ),

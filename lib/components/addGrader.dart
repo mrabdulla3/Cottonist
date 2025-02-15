@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:cottonist/controller/signup_controller.dart';
-import 'package:cottonist/views/login_screen.dart';
 
-class SignUpScreen extends StatefulWidget {
+class AddGrader extends StatefulWidget {
   @override
-  _SignUpScreenState createState() => _SignUpScreenState();
+  _AddGraderState createState() => _AddGraderState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
+class _AddGraderState extends State<AddGrader> {
   final _formKey = GlobalKey<FormState>();
   final signupController = Get.put(SignupController());
 
   TextEditingController orgNameController = TextEditingController();
   TextEditingController orgAddController = TextEditingController();
-  TextEditingController dirNameController = TextEditingController();
+  TextEditingController graderNameController = TextEditingController();
   TextEditingController mobileController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController userNameController = TextEditingController();
@@ -48,7 +47,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               SizedBox(height: screenHeight * 0.02),
 
               const Text(
-                "Create Account",
+                "Grader Form",
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
 
@@ -72,7 +71,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text("Sign Up",
+                    const Text("Add Grader",
                         style: TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold)),
                     const SizedBox(height: 15),
@@ -80,7 +79,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         Icons.business, false),
                     _buildTextField("Organization Address", orgAddController,
                         Icons.location_on, false),
-                    _buildTextField("Director Name", dirNameController,
+                    _buildTextField("Grader Name", graderNameController,
                         Icons.person, false),
                     _buildTextField(
                         "Mobile Number", mobileController, Icons.phone, false,
@@ -169,7 +168,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   signupController.signUp(
                                       orgNameController.text,
                                       orgAddController.text,
-                                      dirNameController.text,
+                                      graderNameController.text,
                                       mobileController.text,
                                       emailController.text,
                                       userNameController.text,
@@ -183,7 +182,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       borderRadius: BorderRadius.circular(10)),
                                   padding: EdgeInsets.symmetric(vertical: 12),
                                 ),
-                                child: const Text("Create Account",
+                                child: const Text("Add Grader",
                                     style: TextStyle(
                                         color: Colors.white, fontSize: 16)),
                               ),
@@ -194,19 +193,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
               ),
 
-              SizedBox(height: screenHeight * 0.02),
-
-              const Text("Already have an account?"),
-              TextButton(
-                onPressed: () {
-                  Get.to(() => LoginScreen());
-                },
-                child: const Text(
-                  "Login",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold, color: Colors.blue),
-                ),
-              ),
+              SizedBox(height: screenHeight * 0.03),
             ],
           ),
         ),
