@@ -56,7 +56,7 @@ class SignupController extends GetxController {
         'Error!', // Title
         'Something went wrong!', // Message
         snackPosition: SnackPosition.BOTTOM, // Position
-        backgroundColor: Colors.green,
+        backgroundColor: Colors.red,
         colorText: Colors.white,
         borderRadius: 10,
         margin: EdgeInsets.all(10),
