@@ -1,5 +1,3 @@
-import 'package:cottonist/views/dashboards/director_dashboard.dart';
-import 'package:cottonist/views/dashboards/grader_dashboard.dart';
 import 'package:cottonist/views/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
