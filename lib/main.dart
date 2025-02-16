@@ -1,5 +1,6 @@
 import 'package:cottonist/views/dashboards/director_dashboard.dart';
 import 'package:cottonist/views/dashboards/grader_dashboard.dart';
+import 'package:cottonist/views/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: GraderDashboard(),
+      home: LoginScreen(),
       debugShowCheckedModeBanner: false,
     );
   }

@@ -1,3 +1,5 @@
+import 'package:cottonist/views/dashboards/director_dashboard.dart';
+import 'package:cottonist/views/dashboards/grader_dashboard.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -5,6 +7,7 @@ import 'dart:convert';
 
 class LoginController extends GetxController {
   RxBool isLoading = false.obs;
+  RxBool isPasswordHidden = true.obs;
 
   Future<void> login(String username, String password) async {
     String url = 'https://www.shreshtacotton.com/api/login/';
@@ -20,8 +23,13 @@ class LoginController extends GetxController {
       //print(response.statusCode);
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
-        print("Login Successful: ${data}");
+        //print("Login Successful: ${data}");
         isLoading.value = false;
+        if (data['role'] == "grader") {
+          Get.offAll(() => GraderDashboard());
+        } else if (data['role'] == "director") {
+          Get.offAll(() => DirectorDashboard());
+        }
         Get.snackbar(
           'Success', // Title
           'Login successful!', // Message

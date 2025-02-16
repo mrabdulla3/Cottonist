@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:cottonist/views/dashboards/director_dashboard.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +34,7 @@ class SignupController extends GetxController {
       );
       //print(response.body);
       if (response.statusCode == 200 || response.statusCode == 201) {
+        Get.offAll(() => DirectorDashboard());
         Get.snackbar(
           'Success',
           'Signup Successful!',

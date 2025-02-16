@@ -76,16 +76,25 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   SizedBox(height: 10),
-                  TextField(
-                    controller: passwordController,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.lock_outline),
-                      labelText: "Password",
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                    ),
-                  ),
+                  Obx(() => TextField(
+                        controller: passwordController,
+                        obscureText: loginController.isPasswordHidden.value,
+                        decoration: InputDecoration(
+                            prefixIcon: Icon(Icons.lock_outline),
+                            labelText: "Password",
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            suffixIcon: IconButton(
+                                onPressed: () {
+                                  loginController.isPasswordHidden.value =
+                                      !loginController.isPasswordHidden.value;
+                                },
+                                icon: Icon(
+                                  loginController.isPasswordHidden.value
+                                      ? Icons.visibility_off
+                                      : Icons.visibility,
+                                ))),
+                      )),
                   SizedBox(height: 10),
                   SizedBox(
                     width: double.infinity,
@@ -139,11 +148,7 @@ class _LoginScreenState extends State<LoginScreen> {
             const Text("Don't Have an Account?"),
             TextButton(
               onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => SignUpScreen(),
-                    ));
+                Get.offAll(() => SignUpScreen());
               },
               child: const Text(
                 "Create Account",

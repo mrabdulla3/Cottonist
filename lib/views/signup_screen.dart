@@ -21,7 +21,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPassController = TextEditingController();
 
-  String selectedRole = 'Grader'; // Default role
+  String selectedRole = 'Director';
+  List<String> roles = ["Director"];
 
   @override
   Widget build(BuildContext context) {
@@ -108,9 +109,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               borderRadius: BorderRadius.circular(10)),
                           prefixIcon: Icon(Icons.people),
                         ),
-                        items: [
-                          "Grader",
-                        ].map((String role) {
+                        items: roles.map((String role) {
                           return DropdownMenuItem<String>(
                             value: role,
                             child: Text(role),

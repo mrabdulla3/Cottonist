@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:cottonist/components/addGrader.dart';
-import 'package:cottonist/views/quality_metrics_screen.dart';
+import 'package:cottonist/views/showMetrics_screen.dart';
 
 class DirectorDashboard extends StatefulWidget {
   const DirectorDashboard({super.key});

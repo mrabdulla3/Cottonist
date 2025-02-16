@@ -1,5 +1,6 @@
-import 'dart:io';
+import 'package:cottonist/controller/testQuality_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 class TestQualityMetricsScreen extends StatefulWidget {
@@ -10,34 +11,9 @@ class TestQualityMetricsScreen extends StatefulWidget {
       _TestQualityMetricsScreenState();
 }
 
+final testQualityController = Get.put(TestQualityMetricsController());
+
 class _TestQualityMetricsScreenState extends State<TestQualityMetricsScreen> {
-  File? selectedImage;
-
-  // Function to pick an image from Camera or Gallery
-  Future<void> _pickImage(ImageSource source) async {
-    final pickedFile = await ImagePicker().pickImage(source: source);
-    if (pickedFile != null) {
-      setState(() {
-        selectedImage = File(pickedFile.path);
-      });
-    }
-  }
-
-  // Function to send image to AI model (to be implemented)
-  void _sendToAI() {
-    if (selectedImage == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Please select an image first")),
-      );
-      return;
-    }
-
-    // Placeholder for API call
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text("Sending image to AI model...")),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,24 +37,24 @@ class _TestQualityMetricsScreenState extends State<TestQualityMetricsScreen> {
 
               // Image Container with Proper Constraints
               Container(
-                width: MediaQuery.of(context).size.width *
-                    0.9, // Prevents overflow
-                height: 200,
-                decoration: BoxDecoration(
-                  color: Colors.grey[300],
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: selectedImage != null
-                    ? ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Image.file(
-                          selectedImage!,
-                          fit: BoxFit.cover,
-                          width: double.infinity,
-                        ),
-                      )
-                    : const Center(child: Text("No Image Selected")),
-              ),
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  height: 200,
+                  decoration: BoxDecoration(
+                    color: Colors.grey[300],
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Obx(
+                    () => testQualityController.selectedImage.value != null
+                        ? ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Image.file(
+                              testQualityController.selectedImage.value!,
+                              fit: BoxFit.cover,
+                              width: double.infinity,
+                            ),
+                          )
+                        : const Center(child: Text("No Image Selected")),
+                  )),
 
               const SizedBox(height: 20),
 
@@ -88,9 +64,16 @@ class _TestQualityMetricsScreenState extends State<TestQualityMetricsScreen> {
                 children: [
                   Expanded(
                     child: ElevatedButton.icon(
-                      onPressed: () => _pickImage(ImageSource.camera),
-                      icon: const Icon(Icons.camera_alt),
-                      label: const Text("Capture Image"),
+                      onPressed: () =>
+                          testQualityController.pickImage(ImageSource.camera),
+                      icon: const Icon(
+                        Icons.camera_alt,
+                        color: Colors.white,
+                      ),
+                      label: const Text(
+                        "Capture Image",
+                        style: TextStyle(color: Colors.white),
+                      ),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.blue,
                         padding: const EdgeInsets.symmetric(vertical: 12),
@@ -100,9 +83,16 @@ class _TestQualityMetricsScreenState extends State<TestQualityMetricsScreen> {
                   const SizedBox(width: 10),
                   Expanded(
                     child: ElevatedButton.icon(
-                      onPressed: () => _pickImage(ImageSource.gallery),
-                      icon: const Icon(Icons.image),
-                      label: const Text("Upload Image"),
+                      onPressed: () =>
+                          testQualityController.pickImage(ImageSource.gallery),
+                      icon: const Icon(
+                        Icons.image,
+                        color: Colors.white,
+                      ),
+                      label: const Text(
+                        "Upload Image",
+                        style: TextStyle(color: Colors.white),
+                      ),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.blue,
                         padding: const EdgeInsets.symmetric(vertical: 12),
@@ -118,9 +108,15 @@ class _TestQualityMetricsScreenState extends State<TestQualityMetricsScreen> {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton.icon(
-                  onPressed: _sendToAI,
-                  icon: const Icon(Icons.upload),
-                  label: const Text("Analyze Quality"),
+                  onPressed: testQualityController.sendToAI,
+                  icon: const Icon(
+                    Icons.upload,
+                    color: Colors.white,
+                  ),
+                  label: const Text(
+                    "Analyze Quality",
+                    style: TextStyle(color: Colors.white),
+                  ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.green,
                     padding: const EdgeInsets.symmetric(vertical: 12),
