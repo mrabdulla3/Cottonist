@@ -47,7 +47,7 @@ class _TestQualityMetricsScreenState extends State<TestQualityMetricsScreen> {
                     () => testQualityController.selectedImage.value != null
                         ? ClipRRect(
                             borderRadius: BorderRadius.circular(10),
-                            child: Image.file(
+                            child: Image.memory(
                               testQualityController.selectedImage.value!,
                               fit: BoxFit.cover,
                               width: double.infinity,

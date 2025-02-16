@@ -33,13 +33,12 @@ class TestQualityMetricsController extends GetxController {
       var request = http.MultipartRequest('POST', url);
       request.headers['Authorization'] = 'Bearer ${_loginController.accessToken.value}';
       request.headers['Accept'] = 'application/json';
-
+      
       request.files.add(await http.MultipartFile.fromPath(
         'file',
         selectedImage.value!.path,
         filename: basename(selectedImage.value!.path),
       ));
-      
       var response = await request.send();
       print(response.statusCode);
       if (response.statusCode == 200) {
