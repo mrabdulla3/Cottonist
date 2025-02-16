@@ -8,7 +8,6 @@ import 'dart:convert';
 class LoginController extends GetxController {
   RxBool isLoading = false.obs;
   RxBool isPasswordHidden = true.obs;
-  RxString accessToken="".obs;
 
   Future<void> login(String username, String password) async {
     String url = 'https://www.shreshtacotton.com/api/login/';
@@ -24,8 +23,7 @@ class LoginController extends GetxController {
       //print(response.statusCode);
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
-        accessToken.value=data['access'];
-        print("Login Successful: ${data}");
+        //print("Login Successful: ${data}");
         isLoading.value = false;
         if (data['role'] == "grader") {
           Get.offAll(() => GraderDashboard());
@@ -50,7 +48,7 @@ class LoginController extends GetxController {
           'Login Failed', // Title
           'Please! try again later', // Message
           snackPosition: SnackPosition.BOTTOM, // Position
-          backgroundColor: Colors.red,
+          backgroundColor: Colors.green,
           colorText: Colors.white,
           borderRadius: 10,
           margin: EdgeInsets.all(10),
@@ -66,7 +64,7 @@ class LoginController extends GetxController {
         'ERROR Occured', // Title
         '${e.toString()}', // Message
         snackPosition: SnackPosition.BOTTOM, // Position
-        backgroundColor: Colors.red,
+        backgroundColor: Colors.green,
         colorText: Colors.white,
         borderRadius: 10,
         margin: EdgeInsets.all(10),
