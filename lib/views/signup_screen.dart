@@ -159,7 +159,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 height: 30,
                                 width: 30,
                                 child:
-                                    CircularProgressIndicator(strokeWidth: 2.5),
+                                    Center(child: CircularProgressIndicator(strokeWidth: 2.5)),
                               )
                             : ElevatedButton(
                                 onPressed: () {

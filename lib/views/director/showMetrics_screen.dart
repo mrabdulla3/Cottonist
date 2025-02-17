@@ -1,4 +1,4 @@
-import 'package:cottonist/views/metrics_detailed_page.dart';
+import 'package:cottonist/views/director/metrics_detailed_page.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:share_plus/share_plus.dart';

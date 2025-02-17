@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 
 class MetricDetailPage extends StatelessWidget {
+  
   final Map<String, dynamic> metric;
 
   const MetricDetailPage({super.key, required this.metric});

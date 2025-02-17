@@ -1,4 +1,4 @@
-import 'package:cottonist/views/testQuality_metrics.dart';
+import 'package:cottonist/views/grader/testQuality_metrics.dart';
 import 'package:flutter/material.dart';
 
 class GraderDashboard extends StatefulWidget {
