@@ -31,7 +31,7 @@ class SignupController extends GetxController {
           'logo': image
         }),
       );
-      //print(response.body);
+      print(response.body);
       if (response.statusCode == 200 || response.statusCode == 201) {
         Get.snackbar(
           'Success',
@@ -88,6 +88,6 @@ class SignupController extends GetxController {
       selectedImage.value = await imageFile.readAsBytes();
     }
 
-    //print(selectedImage.value);
+    // print(selectedImage.value);
   }
 }

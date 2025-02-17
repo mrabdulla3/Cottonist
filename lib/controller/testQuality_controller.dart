@@ -35,9 +35,10 @@ class TestQualityMetricsController extends GetxController {
         Uri.parse("https://www.shreshtacotton.com/api/upload-and-predict/");
     try {
       var request = http.MultipartRequest('POST', url);
-      request.headers['Authorization'] = 'Bearer ${_loginController.accessToken.value}';
+      request.headers['Authorization'] =
+          'Bearer ${_loginController.accessToken.value}';
       request.headers['Accept'] = 'application/json';
-      
+
       request.files.add(await http.MultipartFile.fromPath(
         'file',
         selectedImage.value!.path,
