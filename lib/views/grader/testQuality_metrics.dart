@@ -14,6 +14,12 @@ class TestQualityMetricsScreen extends StatefulWidget {
 final testQualityController = Get.put(TestQualityMetricsController());
 
 class _TestQualityMetricsScreenState extends State<TestQualityMetricsScreen> {
+
+  void initState(){
+    super.initState();
+
+    testQualityController.selectedImage.value=null;
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,7 +53,7 @@ class _TestQualityMetricsScreenState extends State<TestQualityMetricsScreen> {
                     () => testQualityController.selectedImage.value != null
                         ? ClipRRect(
                             borderRadius: BorderRadius.circular(10),
-                            child: Image.memory(
+                            child: Image.file(
                               testQualityController.selectedImage.value!,
                               fit: BoxFit.cover,
                               width: double.infinity,
@@ -107,13 +113,30 @@ class _TestQualityMetricsScreenState extends State<TestQualityMetricsScreen> {
               // Send to AI Button
               SizedBox(
                 width: double.infinity,
-                child: ElevatedButton.icon(
-                  onPressed: testQualityController.sendToAI,
+                child:Obx(()=>
+                 testQualityController.isLoading.value
+                ? const SizedBox(
+                                height: 30,
+                                width: 30,
+                                child:
+                                    Center(child: CircularProgressIndicator(strokeWidth: 2.5)),
+                              ):
+                ElevatedButton.icon(
+                  onPressed: (){
+                    if(testQualityController.selectedImage.value!=null)
+                     testQualityController.sendToAI();
+
+                     else{
+                      Get.snackbar("ERROR", "Select an image!");
+                     }
+
+                  },
+                  
                   icon: const Icon(
                     Icons.upload,
                     color: Colors.white,
                   ),
-                  label: const Text(
+                  label:Text(
                     "Analyze Quality",
                     style: TextStyle(color: Colors.white),
                   ),
@@ -121,7 +144,8 @@ class _TestQualityMetricsScreenState extends State<TestQualityMetricsScreen> {
                     backgroundColor: Colors.green,
                     padding: const EdgeInsets.symmetric(vertical: 12),
                   ),
-                ),
+                )
+                ) 
               ),
             ],
           ),
