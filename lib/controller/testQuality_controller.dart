@@ -40,7 +40,7 @@ class TestQualityMetricsController extends GetxController {
         filename: basename(selectedImage.value!.path),
       ));
       var response = await request.send();
-      print(response.statusCode);
+      print('Status Code:${response.statusCode}');
       if (response.statusCode == 200) {
         var responseData = await response.stream.bytesToString();
         Get.snackbar("Success", "Analysis Complete: $responseData");
