@@ -1,12 +1,12 @@
+import 'dart:convert';
 import 'dart:math';
-
-import 'package:flutter/material.dart';
+import 'package:cottonist/views/grader/showPredictionQR.dart';
 import 'package:get/get.dart';
 import 'package:qr_code_scanner_plus/qr_code_scanner_plus.dart';
 
 class CheckqualityMetricsController extends GetxController {
   QRViewController? controller;
-  Rx<String> scannedResult = "Scan a QR code".obs;
+  Rx<String> scannedResult = "".obs;
 
   void onQRViewCreated(QRViewController controller) {
     print("OnQRCODECREATED");
@@ -15,7 +15,21 @@ class CheckqualityMetricsController extends GetxController {
       if (scanData.code != null) {
         print("Scanned QR Code: ${scanData.code}");
       }
-      scannedResult.value = scanData.code!;
+        try{
+           scannedResult.value = scanData.code!;
+       // CheckQulality metrics = CheckQulality.fromJson(scannedResult.value);
+       String validJsonString = scannedResult.value.replaceAll("'", '"');
+        Map<String, dynamic> responseMap = json.decode(validJsonString);
+        
+        Get.to(ShowpredictionQR(mapGrader: responseMap,));
+
+        }catch(e){
+
+          print(e);
+          Get.snackbar("Error", "$e");
+        }
+       
+      }
     });
     print(scannedResult);
   }

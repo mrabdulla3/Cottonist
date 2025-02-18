@@ -39,7 +39,8 @@ class _GraderDashboardState extends State<GraderDashboard> {
         return AlertDialog(
           title: Text("Scan QR Code"),
           content: Container(
-            height: 400, // Adjust height as needed
+            height: (320/ 800) * MediaQuery.of(context).size.height,
+            width: (220/ 360) * MediaQuery.of(context).size.height, // Adjust height as needed
             child: QRView(
               key: qrKey,
               onQRViewCreated: checkQualityController.onQRViewCreated,
