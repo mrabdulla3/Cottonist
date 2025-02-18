@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:cottonist/views/dashboards/director_dashboard.dart';
@@ -6,33 +5,40 @@ import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart';
 
 class SignupController extends GetxController {
   RxBool isLoading = false.obs;
-  final Rxn<Uint8List> selectedImage = Rxn<Uint8List>();
+  var selectedImage = Rxn<File?>();
 
   Future<void> signUp(String orgName, orgAdd, dirName, mobile, email, username,
-      password, role, Uint8List image) async {
+      password, role, File image) async {
     isLoading.value = true;
     try {
       String url = 'https://www.shreshtacotton.com/api/signup/';
 
-      var response = await http.post(
-        Uri.parse(url),
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({
-          'organizationName': orgName,
-          'email': email,
-          'password': password,
-          'organizationAddress': orgAdd,
-          'mobileNumber': mobile,
-          'directorName': dirName,
-          'username': username,
-          'role': role,
-          'logo': image
-        }),
-      );
-      //print(response.body);
+      var request = http.MultipartRequest('POST', Uri.parse(url));
+      request.fields.addAll({
+        'organizationName': orgName,
+        'email': email,
+        'password': password,
+        'organizationAddress': orgAdd,
+        'mobileNumber': mobile,
+        'directorName': dirName,
+        'username': username,
+        'role': role,
+      });
+
+      if (selectedImage.value != null) {
+        request.files.add(await http.MultipartFile.fromPath(
+          'logo',
+          selectedImage.value!.path,
+          filename: basename(selectedImage.value!.path),
+        ));
+      }
+
+      var response = await request.send();
+      print(response.statusCode);
       if (response.statusCode == 200 || response.statusCode == 201) {
         Get.offAll(() => DirectorDashboard());
         Get.snackbar(
@@ -45,7 +51,7 @@ class SignupController extends GetxController {
       } else {
         Get.snackbar(
           'Error',
-          'Signup Failed: ${response.body}',
+          'Signup Failed: ${await response.stream.bytesToString()}',
           backgroundColor: Colors.red,
           colorText: Colors.white,
           snackPosition: SnackPosition.BOTTOM,
@@ -53,9 +59,9 @@ class SignupController extends GetxController {
       }
     } catch (e) {
       Get.snackbar(
-        'Error!', // Title
-        'Something went wrong!', // Message
-        snackPosition: SnackPosition.BOTTOM, // Position
+        'Error!',
+        'Something went wrong!',
+        snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.red,
         colorText: Colors.white,
         borderRadius: 10,
@@ -74,8 +80,7 @@ class SignupController extends GetxController {
     final pickedFile =
         await ImagePicker().pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
-      File imageFile = File(pickedFile.path);
-      selectedImage.value = await imageFile.readAsBytes();
+      selectedImage.value = await File(pickedFile.path);
     }
 
     print(selectedImage.value);

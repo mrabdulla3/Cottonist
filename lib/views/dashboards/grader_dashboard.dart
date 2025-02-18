@@ -33,7 +33,6 @@ class _GraderDashboardState extends State<GraderDashboard> {
   }
 
   void _showQRScannerDialog() {
-    
     showDialog(
       context: context,
       builder: (context) {
@@ -53,11 +52,7 @@ class _GraderDashboardState extends State<GraderDashboard> {
               ),
               onPermissionSet: (ctrl, p) =>
                   checkQualityController.onPermissionSet(ctrl, p),
-            )
-             
-             
-            
-          
+            ),
           ),
           actions: [
             TextButton(

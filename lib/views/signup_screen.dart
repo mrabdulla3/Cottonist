@@ -158,8 +158,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ? const SizedBox(
                                 height: 30,
                                 width: 30,
-                                child:
-                                    Center(child: CircularProgressIndicator(strokeWidth: 2.5)),
+                                child: Center(
+                                    child: CircularProgressIndicator(
+                                        strokeWidth: 2.5)),
                               )
                             : ElevatedButton(
                                 onPressed: () {

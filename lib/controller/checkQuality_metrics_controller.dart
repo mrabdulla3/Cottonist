@@ -14,6 +14,7 @@ class CheckqualityMetricsController extends GetxController {
     controller.scannedDataStream.listen((scanData) {
       if (scanData.code != null) {
         print("Scanned QR Code: ${scanData.code}");
+      }
         try{
            scannedResult.value = scanData.code!;
        // CheckQulality metrics = CheckQulality.fromJson(scannedResult.value);
@@ -29,7 +30,6 @@ class CheckqualityMetricsController extends GetxController {
         }
        
       }
-      
     });
     print(scannedResult);
   }
