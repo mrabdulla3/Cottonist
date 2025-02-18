@@ -1,17 +1,14 @@
-import 'package:cottonist/controller/show_Prediction_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-class Showprediction extends StatefulWidget {
-  Showprediction({super.key});
+class ShowpredictionImage extends StatefulWidget {
+  final Map<String, dynamic> mapGrader;
+  ShowpredictionImage({required this.mapGrader});
 
   @override
-  State<Showprediction> createState() => _showpredictionPageState();
+  State<ShowpredictionImage> createState() => _ShowpredictionPageState();
 }
 
-class _showpredictionPageState extends State<Showprediction> {
-  final showDetail = Get.put(ShowPredictionController());
-
+class _ShowpredictionPageState extends State<ShowpredictionImage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,12 +24,15 @@ class _showpredictionPageState extends State<Showprediction> {
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           child: Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Obx(() {
-              var metric = showDetail.MapPredGrader.value;
-              
+            child: Builder(builder: (context) {
+              var metric = widget.mapGrader;
+
               if (metric.isEmpty) {
                 return const Center(
-                  child: Text("No data available", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                  child: Text(
+                    "No data available",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
                 );
               }
 

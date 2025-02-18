@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:cottonist/controller/login_controller.dart';
-import 'package:cottonist/views/grader/showPrediction.dart';
+import 'package:cottonist/views/grader/showPredictionImage.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
@@ -54,8 +54,9 @@ class TestQualityMetricsController extends GetxController {
         MapPred.value = responseMap;
         print(responseMap['prediction']);
         Get.snackbar("Success", "Analysis Complete !");
-        selectedImage.value = null;
-        Get.to(() => Showprediction());
+        selectedImage.value=null;
+
+        Get.to(()=> ShowpredictionImage(mapGrader: MapPred,));
       } else {
         Get.snackbar("Error", "Failed to analyze image.");
       }
