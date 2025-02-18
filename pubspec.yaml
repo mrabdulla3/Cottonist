@@ -41,6 +41,8 @@ dependencies:
   share_plus: ^10.1.4
   image_picker: ^1.1.2
   qr_code_scanner_plus: ^2.0.10+1
+  path: ^1.9.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
