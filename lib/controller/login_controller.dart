@@ -29,7 +29,7 @@ class LoginController extends GetxController {
         isLoading.value = false;
         if (data['role'] == "grader") {
           Get.offAll(() => GraderDashboard());
-        } else if (data['role'] == "director") {
+        } else if (data['role'] == "Director") {
           Get.offAll(() => DirectorDashboard());
         }
         Get.snackbar(
