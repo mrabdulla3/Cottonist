@@ -19,7 +19,7 @@ class _ShowPredictionImageState extends State<ShowPredictionImage> {
     return Scaffold(
       backgroundColor: const Color(0xFFF7F3E8),
       appBar: AppBar(
-        backgroundColor: const Color(0xFF0077B6),
+        backgroundColor: Color(0xFF65B845),
         title: const Text("Prediction", style: TextStyle(color: Colors.white)),
         centerTitle: true,
       ),

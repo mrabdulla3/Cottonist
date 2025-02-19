@@ -25,7 +25,7 @@ class _TestQualityMetricsScreenState extends State<TestQualityMetricsScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFFF7F3E8),
       appBar: AppBar(
-        backgroundColor: const Color(0xFF0077B6),
+        backgroundColor: Color(0xFF65B845),
         title: const Text("Test Quality Metrics",
             style: TextStyle(color: Colors.white)),
       ),
@@ -81,7 +81,7 @@ class _TestQualityMetricsScreenState extends State<TestQualityMetricsScreen> {
                         style: TextStyle(color: Colors.white),
                       ),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue,
+                        backgroundColor: Color(0xFF65B845),
                         padding: const EdgeInsets.symmetric(vertical: 12),
                       ),
                     ),
@@ -100,7 +100,7 @@ class _TestQualityMetricsScreenState extends State<TestQualityMetricsScreen> {
                         style: TextStyle(color: Colors.white),
                       ),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue,
+                        backgroundColor: Color(0xFF65B845),
                         padding: const EdgeInsets.symmetric(vertical: 12),
                       ),
                     ),
@@ -141,7 +141,7 @@ class _TestQualityMetricsScreenState extends State<TestQualityMetricsScreen> {
                     style: TextStyle(color: Colors.white),
                   ),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
+                    backgroundColor: Color(0xFF65B845),
                     padding: const EdgeInsets.symmetric(vertical: 12),
                   ),
                 )
