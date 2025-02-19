@@ -1,31 +1,46 @@
+import 'package:cottonist/views/dashboards/grader_dashboard.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class ShowpredictionQR extends StatefulWidget {
-  final Map<String, dynamic> mapGrader;  // Ensure it's a Map type
+class ShowPredictionQR extends StatefulWidget {
+  final Map<String, dynamic> mapGrader;
 
-  ShowpredictionQR({required this.mapGrader});
+  ShowPredictionQR({required this.mapGrader});
 
   @override
-  State<ShowpredictionQR> createState() => _showpredictionPageState();
+  State<ShowPredictionQR> createState() => _ShowPredictionQRState();
 }
 
-class _showpredictionPageState extends State<ShowpredictionQR> {
+class _ShowPredictionQRState extends State<ShowPredictionQR> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF7F3E8),
+      backgroundColor: Colors.grey[200],
       appBar: AppBar(
-        backgroundColor: const Color(0xFF0077B6),
+        backgroundColor: Colors.blueAccent,
         title: const Text("Prediction", style: TextStyle(color: Colors.white)),
       ),
       body: Center(
         child: Card(
-          elevation: 4,
+          elevation: 6,
           margin: const EdgeInsets.all(16),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: _buildTable(widget.mapGrader),
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _buildTable(widget.mapGrader),
+                const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    _buildButton(Icons.save, "Save", Colors.green),
+                    _buildButton(Icons.rotate_left, "Re-take", Colors.red),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -35,47 +50,52 @@ class _showpredictionPageState extends State<ShowpredictionQR> {
   Widget _buildTable(Map<String, dynamic> metric) {
     if (metric.isEmpty) {
       return const Center(
-        child: Text("No data available", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+        child: Text(
+          "No data available",
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
       );
     }
 
     return Table(
       border: TableBorder.all(width: 1, color: Colors.black26),
-      columnWidths: const {
-        0: FlexColumnWidth(2),
-        1: FlexColumnWidth(3),
-      },
-      children: [
-        _buildTableRow("Lot", metric["lot"].toString()),
-        _buildTableRow("Trash", metric["trash"].toString()),
-        _buildTableRow("2.5% SL", metric["2.5%sl"].toString()),
-        _buildTableRow("50% SL", metric["50%sl"].toString()),
-        _buildTableRow("U.R", metric["U.R"].toString()),
-        _buildTableRow("MIC", metric["MIC"].toString()),
-        _buildTableRow("STR", metric["Str"].toString()),
-        _buildTableRow("ELG", metric["Elg"].toString()),
-        _buildTableRow("AMT", metric["amt"].toString()),
-        _buildTableRow("RD", metric["Rd"].toString()),
-        _buildTableRow("B+", metric["b+"].toString()),
-        _buildTableRow("MR", metric["MR"].toString()),
-        _buildTableRow("C.G", metric["C.G"].toString()),
-        _buildTableRow("SFI", metric["SFI"].toString()),
-      ],
+      columnWidths: const {0: FlexColumnWidth(2), 1: FlexColumnWidth(3)},
+      children: metric.entries.map((entry) {
+        return _buildTableRow(entry.key, entry.value.toString());
+      }).toList(),
     );
   }
 
   TableRow _buildTableRow(String label, String value) {
     return TableRow(
+      decoration: BoxDecoration(color: Colors.blue.shade50),
       children: [
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Text(label, style: const TextStyle(fontWeight: FontWeight.bold)),
+          child: Text(label.toUpperCase(), style: const TextStyle(fontWeight: FontWeight.bold)),
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(value),
         ),
       ],
+    );
+  }
+
+  Widget _buildButton(IconData icon, String label, Color color) {
+    return ElevatedButton.icon(
+      onPressed: () {
+        if(label=="Re-take"){
+          Navigator.pop(context);
+        }
+      },
+      icon: Icon(icon, color: Colors.white),
+      label: Text(label, style: const TextStyle(color: Colors.white)),
+      style: ElevatedButton.styleFrom(
+        backgroundColor: color,
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      ),
     );
   }
 }
