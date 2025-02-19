@@ -1,7 +1,11 @@
+import 'dart:io';
+
+import 'package:cottonist/controller/checkQuality_metrics_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:cottonist/components/addGrader.dart';
 import 'package:cottonist/views/director/showMetrics_screen.dart';
+import 'package:qr_code_scanner_plus/qr_code_scanner_plus.dart';
 
 class DirectorDashboard extends StatefulWidget {
   const DirectorDashboard({super.key});
@@ -11,6 +15,61 @@ class DirectorDashboard extends StatefulWidget {
 }
 
 class _DirectorDashboardState extends State<DirectorDashboard> {
+  final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
+  final checkQualityController = Get.put(CheckqualityMetricsController());
+  @override
+  void reassemble() {
+    super.reassemble();
+    if (Platform.isAndroid) {
+      checkQualityController.controller!.pauseCamera();
+    }
+    checkQualityController.controller!.resumeCamera();
+    print("camera started");
+  }
+
+  @override
+  void dispose() {
+    checkQualityController.controller?.dispose();
+    super.dispose();
+  }
+
+  void _showQRScannerDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text("Scan QR Code"),
+          content: Container(
+            height: (320 / 800) * MediaQuery.of(context).size.height,
+            width: (220 / 360) *
+                MediaQuery.of(context).size.height, // Adjust height as needed
+            child: QRView(
+              key: qrKey,
+              onQRViewCreated: checkQualityController.onQRViewCreated,
+              overlay: QrScannerOverlayShape(
+                borderColor: Colors.red,
+                borderRadius: 10,
+                borderLength: 30,
+                borderWidth: 10,
+              ),
+              onPermissionSet: (ctrl, p) =>
+                  checkQualityController.onPermissionSet(ctrl, p),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                checkQualityController.controller?.pauseCamera();
+                Navigator.pop(context);
+              },
+              child: Text('Close'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -52,7 +111,9 @@ class _DirectorDashboardState extends State<DirectorDashboard> {
                   child: CustomElevatedButton(
                     text: "Check Quality Metrics",
                     icon: Icons.bar_chart,
-                    onPressed: () {},
+                    onPressed: () {
+                      _showQRScannerDialog();
+                    },
                   ),
                 ),
               ],
