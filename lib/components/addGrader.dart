@@ -1,7 +1,6 @@
 import 'package:cottonist/controller/addGrader_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:cottonist/controller/signup_controller.dart';
 
 class AddGrader extends StatefulWidget {
   @override
@@ -137,7 +136,7 @@ class _AddGraderState extends State<AddGrader> {
                             signupController.pickLogo();
                           },
                           style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.blue),
+                              backgroundColor: Color(0xFF65B845)),
                           icon: Icon(
                             Icons.upload,
                             color: Colors.white,
@@ -158,8 +157,9 @@ class _AddGraderState extends State<AddGrader> {
                             ? const SizedBox(
                                 height: 30,
                                 width: 30,
-                                child:
-                                    CircularProgressIndicator(strokeWidth: 2.5),
+                                child: Center(
+                                    child: CircularProgressIndicator(
+                                        strokeWidth: 2.5)),
                               )
                             : ElevatedButton(
                                 onPressed: () {
@@ -177,7 +177,7 @@ class _AddGraderState extends State<AddGrader> {
                                       signupController.selectedImage.value!);
                                 },
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.blue,
+                                  backgroundColor: Color(0xFF65B845),
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10)),
                                   padding: EdgeInsets.symmetric(vertical: 12),

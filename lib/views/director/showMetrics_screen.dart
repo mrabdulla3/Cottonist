@@ -16,7 +16,6 @@ class _ShowMetricsPageState extends State<ShowMetricsPage> {
   final metricsController = Get.put(ShowmetricsController());
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     metricsController.showMetrics();
   }
@@ -70,7 +69,7 @@ class _ShowMetricsPageState extends State<ShowMetricsPage> {
     return Scaffold(
       backgroundColor: const Color(0xFFF7F3E8),
       appBar: AppBar(
-        backgroundColor: const Color(0xFF0077B6),
+        backgroundColor: const Color(0xFF65B845),
         title:
             const Text("Show Metrics", style: TextStyle(color: Colors.white)),
         actions: [
@@ -131,7 +130,7 @@ class _ShowMetricsPageState extends State<ShowMetricsPage> {
                                     Text("Date: ${metric["upload_date"]}"),
                                 trailing: IconButton(
                                   icon: const Icon(Icons.share,
-                                      color: Colors.blue),
+                                      color: Color(0xFF65B845)),
                                   onPressed: () => _shareMetric(metric),
                                 ),
                               ),

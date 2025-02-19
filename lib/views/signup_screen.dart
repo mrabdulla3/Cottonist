@@ -137,7 +137,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             signupController.pickLogo();
                           },
                           style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.blue),
+                              backgroundColor: Color(0xFF65B845)),
                           icon: Icon(
                             Icons.upload,
                             color: Colors.white,
@@ -178,7 +178,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       signupController.selectedImage.value!);
                                 },
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.blue,
+                                  backgroundColor: Color(0xFF65B845),
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10)),
                                   padding: EdgeInsets.symmetric(vertical: 12),
