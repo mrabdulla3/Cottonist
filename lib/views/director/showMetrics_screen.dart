@@ -14,12 +14,21 @@ class ShowMetricsPage extends StatefulWidget {
 
 class _ShowMetricsPageState extends State<ShowMetricsPage> {
   final metricsController = Get.put(ShowmetricsController());
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    metricsController.showMetrics();
+  }
 
   DateTime? startDate;
   DateTime? endDate;
 
   List<Map<String, dynamic>> get filteredMetrics {
-    return metricsController.metricsData;
+    if (startDate == null || endDate == null) {
+      return metricsController.metricsData;
+    }
+    return metricsController.filteredMatrics(startDate!, endDate!);
   }
 
   Future<void> _selectDateRange(BuildContext context) async {
@@ -34,11 +43,6 @@ class _ShowMetricsPageState extends State<ShowMetricsPage> {
         startDate = pickedRange.start;
         endDate = pickedRange.end;
       });
-
-      // Fetch data from API based on the selected date range
-      String formattedStart = DateFormat('yyyy-MM-dd').format(startDate!);
-      String formattedEnd = DateFormat('yyyy-MM-dd').format(endDate!);
-      metricsController.showMetrics(formattedStart, formattedEnd);
     }
   }
 
@@ -111,12 +115,20 @@ class _ShowMetricsPageState extends State<ShowMetricsPage> {
                               elevation: 4,
                               margin: const EdgeInsets.symmetric(vertical: 8),
                               child: ListTile(
-                                leading: Icon(Icons.bar_chart,
-                                    color: Colors.blue.shade700),
-                                title: Text("Quality: ${metric["quality"]}",
+                                leading: ClipRRect(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10)),
+                                    child: Image.network(
+                                      metric["image"],
+                                      fit: BoxFit.cover,
+                                      height: 110,
+                                      width: 80,
+                                    )),
+                                title: Text("Pridiction: ${index + 1}",
                                     style: const TextStyle(
                                         fontWeight: FontWeight.bold)),
-                                subtitle: Text("Date: ${metric["date"]}"),
+                                subtitle:
+                                    Text("Date: ${metric["upload_date"]}"),
                                 trailing: IconButton(
                                   icon: const Icon(Icons.share,
                                       color: Colors.blue),
