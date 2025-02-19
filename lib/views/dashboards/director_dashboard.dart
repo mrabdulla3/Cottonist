@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:cottonist/components/addGrader.dart';
 import 'package:cottonist/views/director/showMetrics_screen.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:qr_code_scanner_plus/qr_code_scanner_plus.dart';
 
 class DirectorDashboard extends StatefulWidget {
@@ -33,53 +34,54 @@ class _DirectorDashboardState extends State<DirectorDashboard> {
     super.dispose();
   }
 
- void _showQRScannerDialog() {
-  showGeneralDialog(
-    context: context,
-    barrierDismissible: true,
-    barrierLabel: "QR Scanner",
-    barrierColor: Colors.black, // Semi-transparent background
-    pageBuilder: (context, anim1, anim2) {
-      return Scaffold(
-        backgroundColor: Colors.transparent.withOpacity(0.9), // Ensures full transparency
-        body: Stack(
-          children: [
-            Center(
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width ,
-                height: MediaQuery.of(context).size.height, // Square scanner
-                child: QRView(
-                  key: qrKey,
-                  onQRViewCreated: checkQualityController.onQRViewCreated,
-                  overlay: QrScannerOverlayShape(
-                    borderColor: Colors.blueAccent,
-                    borderRadius: 12,
-                    borderLength: 50,
-                    borderWidth: 10,
-                    cutOutSize: MediaQuery.of(context).size.width * 0.7,
+  void _showQRScannerDialog() {
+    showGeneralDialog(
+      context: context,
+      barrierDismissible: true,
+      barrierLabel: "QR Scanner",
+      barrierColor: Colors.black, // Semi-transparent background
+      pageBuilder: (context, anim1, anim2) {
+        return Scaffold(
+          backgroundColor:
+              Colors.transparent.withOpacity(0.9), // Ensures full transparency
+          body: Stack(
+            children: [
+              Center(
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height, // Square scanner
+                  child: QRView(
+                    key: qrKey,
+                    onQRViewCreated: checkQualityController.onQRViewCreated,
+                    overlay: QrScannerOverlayShape(
+                      borderColor: Colors.blueAccent,
+                      borderRadius: 12,
+                      borderLength: 50,
+                      borderWidth: 10,
+                      cutOutSize: MediaQuery.of(context).size.width * 0.7,
+                    ),
+                    onPermissionSet: (ctrl, p) =>
+                        checkQualityController.onPermissionSet(ctrl, p),
                   ),
-                  onPermissionSet: (ctrl, p) =>
-                      checkQualityController.onPermissionSet(ctrl, p),
                 ),
               ),
-            ),
-            Positioned(
-              top: 40,
-              right: 20,
-              child: IconButton(
-                icon: Icon(Icons.close, color: Colors.white, size: 30),
-                onPressed: () {
-                  checkQualityController.controller?.pauseCamera();
-                  Navigator.pop(context);
-                },
+              Positioned(
+                top: 40,
+                right: 20,
+                child: IconButton(
+                  icon: Icon(Icons.close, color: Colors.white, size: 30),
+                  onPressed: () {
+                    checkQualityController.controller?.pauseCamera();
+                    Navigator.pop(context);
+                  },
+                ),
               ),
-            ),
-          ],
-        ),
-      );
-    },
-  );
-}
+            ],
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -90,10 +92,11 @@ class _DirectorDashboardState extends State<DirectorDashboard> {
       backgroundColor: const Color(0xFFF7F3E8),
       appBar: AppBar(
         backgroundColor: const Color(0xFF65B845),
-        title: const Center(
+        title: Center(
           child: Text(
             "Dashboard",
-            style: TextStyle(color: Colors.white),
+            style: GoogleFonts.lato(
+                fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white),
           ),
         ),
       ),
@@ -194,11 +197,8 @@ class CustomElevatedButton extends StatelessWidget {
               child: Text(
                 text,
                 textAlign: TextAlign.center,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: GoogleFonts.raleway(
+                    fontWeight: FontWeight.w600, color: Colors.white),
               ),
             ),
           ],
