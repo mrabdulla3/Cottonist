@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:cottonist/views/dashboards/director_dashboard.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';

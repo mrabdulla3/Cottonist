@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-class SignupController extends GetxController {
+class AddgraderController extends GetxController {
   RxBool isLoading = false.obs;
   final Rxn<Uint8List> selectedImage = Rxn<Uint8List>();
 
@@ -35,7 +35,7 @@ class SignupController extends GetxController {
       if (response.statusCode == 200 || response.statusCode == 201) {
         Get.snackbar(
           'Success',
-          'Signup Successful!',
+          'Grader added Successfully!',
           backgroundColor: Colors.green,
           colorText: Colors.white,
           snackPosition: SnackPosition.BOTTOM,
@@ -55,7 +55,7 @@ class SignupController extends GetxController {
       } else {
         Get.snackbar(
           'Error',
-          'Signup Failed: ${response.body}',
+          'Add Grader Failed: ${response.body}',
           backgroundColor: Colors.red,
           colorText: Colors.white,
           snackPosition: SnackPosition.BOTTOM,

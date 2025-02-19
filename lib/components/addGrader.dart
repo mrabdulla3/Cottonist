@@ -1,3 +1,4 @@
+import 'package:cottonist/controller/addGrader_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:cottonist/controller/signup_controller.dart';
@@ -9,7 +10,7 @@ class AddGrader extends StatefulWidget {
 
 class _AddGraderState extends State<AddGrader> {
   final _formKey = GlobalKey<FormState>();
-  final signupController = Get.put(SignupController());
+  final signupController = Get.put(AddgraderController());
 
   TextEditingController orgNameController = TextEditingController();
   TextEditingController orgAddController = TextEditingController();
@@ -20,7 +21,8 @@ class _AddGraderState extends State<AddGrader> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPassController = TextEditingController();
 
-  String selectedRole = 'Grader'; // Default role
+  String selectedRole = 'grader'; // Default role
+  List<String> role = ["grader"];
 
   @override
   Widget build(BuildContext context) {
@@ -107,9 +109,7 @@ class _AddGraderState extends State<AddGrader> {
                               borderRadius: BorderRadius.circular(10)),
                           prefixIcon: Icon(Icons.people),
                         ),
-                        items: [
-                          "Grader",
-                        ].map((String role) {
+                        items: role.map((String role) {
                           return DropdownMenuItem<String>(
                             value: role,
                             child: Text(role),
