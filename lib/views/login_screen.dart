@@ -13,8 +13,15 @@ class LoginScreen extends StatefulWidget {
 final loginController = Get.put(LoginController());
 
 class _LoginScreenState extends State<LoginScreen> {
+  final _formKey = GlobalKey<FormState>(); // Form key to manage validation
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  void validateAndLogin() {
+    if (_formKey.currentState!.validate()) {
+      loginController.login(usernameController.text, passwordController.text);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,57 +66,84 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ],
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text("Login Account",
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                  const SizedBox(height: 15),
-                  TextField(
-                    controller: usernameController,
-                    decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.person_2_outlined),
-                      labelText: "Username",
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10)),
+              child: Form(
+                key: _formKey, // Assigning the form key
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text("Login Account",
+                        style:
+                            TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 15),
+
+                    // Username Field
+                    TextFormField(
+                      controller: usernameController,
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(Icons.person_2_outlined),
+                        labelText: "Username",
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.trim().isEmpty) {
+                          return "Username is required!";
+                        }
+                        return null;
+                      },
                     ),
-                  ),
-                  SizedBox(height: 10),
-                  Obx(() => TextField(
-                        controller: passwordController,
-                        obscureText: loginController.isPasswordHidden.value,
-                        decoration: InputDecoration(
+                    SizedBox(height: 10),
+
+                    // Password Field
+                    Obx(() => TextFormField(
+                          controller: passwordController,
+                          obscureText: loginController.isPasswordHidden.value,
+                          decoration: InputDecoration(
                             prefixIcon: Icon(Icons.lock_outline),
                             labelText: "Password",
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10)),
                             suffixIcon: IconButton(
-                                onPressed: () {
-                                  loginController.isPasswordHidden.value =
-                                      !loginController.isPasswordHidden.value;
-                                },
-                                icon: Icon(
-                                  loginController.isPasswordHidden.value
-                                      ? Icons.visibility_off
-                                      : Icons.visibility,
-                                ))),
-                      )),
-                  SizedBox(height: 10),
-                  SizedBox(
-                    width: double.infinity,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        TextButton(
-                          onPressed: () {},
-                          child: const Text("Forgot Password?",
-                              style: TextStyle(color: Colors.blue)),
-                        ),
-                      ],
+                              onPressed: () {
+                                loginController.isPasswordHidden.value =
+                                    !loginController.isPasswordHidden.value;
+                              },
+                              icon: Icon(
+                                loginController.isPasswordHidden.value
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
+                              ),
+                            ),
+                          ),
+                          validator: (value) {
+                            if (value == null || value.trim().isEmpty) {
+                              return "Password is required!";
+                            }
+                            if (value.length < 6) {
+                              return "Password must be at least 6 characters!";
+                            }
+                            return null;
+                          },
+                        )),
+                    SizedBox(height: 10),
+
+                    // Forgot Password
+                    SizedBox(
+                      width: double.infinity,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          TextButton(
+                            onPressed: () {},
+                            child: const Text("Forgot Password?",
+                                style: TextStyle(color: Colors.blue)),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  SizedBox(
+
+                    // Login Button
+                    SizedBox(
                       width: double.infinity,
                       child: Obx(
                         () => loginController.isLoading.value
@@ -123,10 +157,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                               )
                             : ElevatedButton(
-                                onPressed: () {
-                                  loginController.login(usernameController.text,
-                                      passwordController.text);
-                                },
+                                onPressed: validateAndLogin, // Call validation method
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Color(0xFF65B845),
                                   shape: RoundedRectangleBorder(
@@ -137,9 +168,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                     style: TextStyle(
                                         color: Colors.white, fontSize: 16)),
                               ),
-                      )),
-                  SizedBox(height: 10),
-                ],
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                  ],
+                ),
               ),
             ),
 

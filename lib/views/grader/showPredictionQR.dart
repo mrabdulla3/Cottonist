@@ -1,6 +1,6 @@
-import 'package:cottonist/views/dashboards/grader_dashboard.dart';
+
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+
 
 class ShowPredictionQR extends StatefulWidget {
   final Map<String, dynamic> mapGrader;
