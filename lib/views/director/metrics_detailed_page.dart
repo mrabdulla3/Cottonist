@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:share_plus/share_plus.dart';
 
 class MetricDetailPage extends StatelessWidget {
@@ -23,8 +24,13 @@ class MetricDetailPage extends StatelessWidget {
       backgroundColor: const Color(0xFFF7F3E8),
       appBar: AppBar(
         backgroundColor: const Color(0xFF65B845),
-        title: const Text("Pridiction Detail",
-            style: TextStyle(color: Colors.white)),
+        title: Center(
+          child: Text("Pridiction Detail",
+              style: GoogleFonts.lato(
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white,
+                  fontSize: 20)),
+        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.share, color: Colors.white),
@@ -78,8 +84,8 @@ class MetricDetailPage extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child:
-              Text(label, style: const TextStyle(fontWeight: FontWeight.bold)),
+          child: Text(label,
+              style: GoogleFonts.raleway(fontWeight: FontWeight.w800)),
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),

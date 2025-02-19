@@ -1,6 +1,7 @@
 import 'package:cottonist/controller/addGrader_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AddGrader extends StatefulWidget {
   @override
@@ -47,9 +48,10 @@ class _AddGraderState extends State<AddGrader> {
               ),
               SizedBox(height: screenHeight * 0.02),
 
-              const Text(
+              Text(
                 "Grader Form",
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                style: GoogleFonts.aboreto(
+                    fontWeight: FontWeight.w700, fontSize: 23),
               ),
 
               SizedBox(height: screenHeight * 0.03),
@@ -72,9 +74,9 @@ class _AddGraderState extends State<AddGrader> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text("Add Grader",
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold)),
+                    Text("Add Grader",
+                        style: GoogleFonts.raleway(
+                            fontWeight: FontWeight.w700, fontSize: 18)),
                     const SizedBox(height: 15),
                     _buildTextField("Organization Name", orgNameController,
                         Icons.business, false),
@@ -182,9 +184,11 @@ class _AddGraderState extends State<AddGrader> {
                                       borderRadius: BorderRadius.circular(10)),
                                   padding: EdgeInsets.symmetric(vertical: 12),
                                 ),
-                                child: const Text("Add Grader",
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 16)),
+                                child: Text("Add Grader",
+                                    style: GoogleFonts.lato(
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.white,
+                                        fontSize: 16)),
                               ),
                       ),
                     ),
