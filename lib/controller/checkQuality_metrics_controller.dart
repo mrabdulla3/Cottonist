@@ -22,11 +22,7 @@ class CheckqualityMetricsController extends GetxController {
         
         Get.to(ShowPredictionQR(mapGrader: responseMap,));
 
-        }catch(e){
-          Get.to(ShowpredictionQR(
-            mapGrader: responseMap,
-          ));
-        } catch (e) {
+        }catch (e) {
           print(e);
           Get.snackbar("Error", "$e");
         }
