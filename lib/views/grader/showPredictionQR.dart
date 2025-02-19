@@ -32,13 +32,6 @@ class _ShowPredictionQRState extends State<ShowPredictionQR> {
               children: [
                 _buildTable(widget.mapGrader),
                 const SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    _buildButton(Icons.save, "Save", Colors.green),
-                    _buildButton(Icons.rotate_left, "Re-take", Colors.red),
-                  ],
-                ),
               ],
             ),
           ),
@@ -82,20 +75,4 @@ class _ShowPredictionQRState extends State<ShowPredictionQR> {
     );
   }
 
-  Widget _buildButton(IconData icon, String label, Color color) {
-    return ElevatedButton.icon(
-      onPressed: () {
-        if(label=="Re-take"){
-          Navigator.pop(context);
-        }
-      },
-      icon: Icon(icon, color: Colors.white),
-      label: Text(label, style: const TextStyle(color: Colors.white)),
-      style: ElevatedButton.styleFrom(
-        backgroundColor: color,
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      ),
-    );
-  }
 }

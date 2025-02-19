@@ -55,7 +55,7 @@ class TestQualityMetricsController extends GetxController {
         print(responseMap['prediction']);
         Get.snackbar("Success", "Analysis Complete !");
         selectedImage.value=null;
-
+        print("TestQualityController\n$MapPred");
         Get.to(()=> ShowPredictionImage(mapGrader: MapPred,));
       } else {
         Get.snackbar("Error", "Failed to analyze image.");

@@ -1,12 +1,17 @@
+import 'package:cottonist/controller/save_prediction_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ShowPredictionImage extends StatefulWidget {
   final Map<String, dynamic> mapGrader;
-  const ShowPredictionImage({Key? key, required this.mapGrader}) : super(key: key);
+  const ShowPredictionImage({Key? key, required this.mapGrader})
+      : super(key: key);
 
   @override
   State<ShowPredictionImage> createState() => _ShowPredictionImageState();
 }
+
+final saveController = Get.put(SavePredictionController());
 
 class _ShowPredictionImageState extends State<ShowPredictionImage> {
   @override
@@ -23,7 +28,8 @@ class _ShowPredictionImageState extends State<ShowPredictionImage> {
           elevation: 6,
           shadowColor: Colors.black26,
           margin: const EdgeInsets.all(16),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           child: Padding(
             padding: const EdgeInsets.all(20.0),
             child: SingleChildScrollView(
@@ -38,8 +44,16 @@ class _ShowPredictionImageState extends State<ShowPredictionImage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      _buildButton(Icons.save, "Save", Colors.green),
-                    _buildButton(Icons.rotate_left, "Re-take", Colors.red),
+                      Obx(
+                        () => saveController.isLoadingS.value
+                            ? CircularProgressIndicator()
+                            : _buildButton(Icons.save, "Save", Colors.green),
+                      ),
+                      Obx(
+                        () => saveController.isLoadingD.value
+                            ? CircularProgressIndicator()
+                            : _buildButton(Icons.save, "Cancel", Colors.red),
+                      )
                     ],
                   ),
                 ],
@@ -88,14 +102,16 @@ class _ShowPredictionImageState extends State<ShowPredictionImage> {
   TableRow _buildTableRow(String label, String value) {
     return TableRow(
       decoration: BoxDecoration(
-        color:  Colors.blue.shade50 , // Alternating colors
+        color: Colors.blue.shade50, // Alternating colors
       ),
       children: [
         Padding(
           padding: const EdgeInsets.all(12.0),
           child: Text(
             label.toUpperCase(),
-            style: const TextStyle(fontWeight: FontWeight.bold, ),
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
             textAlign: TextAlign.center,
           ),
         ),
@@ -111,10 +127,20 @@ class _ShowPredictionImageState extends State<ShowPredictionImage> {
     );
   }
 
-   Widget _buildButton(IconData icon, String label, Color color) {
+  Widget _buildButton(IconData icon, String label, Color color) {
     return ElevatedButton.icon(
-      onPressed: () {
-        if(label=="Re-take"){
+      onPressed: () async {
+        print("45");
+        var metric = widget.mapGrader;
+        var doc_id = metric["doc_id"];
+        if (label == "Cancel") {
+          print(doc_id);
+          await saveController.deleteprediction(doc_id);
+          Navigator.pop(context);
+        } else if (label == "Save") {
+          print(doc_id);
+
+          await saveController.saveprediction(doc_id,);
           Navigator.pop(context);
         }
       },
