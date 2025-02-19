@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 
 class MetricDetailPage extends StatelessWidget {
-  
   final Map<String, dynamic> metric;
 
   const MetricDetailPage({super.key, required this.metric});
@@ -48,10 +47,23 @@ class MetricDetailPage extends StatelessWidget {
                 1: FlexColumnWidth(3)
               },
               children: [
-                _buildTableRow("Date", metric["date"]),
-                _buildTableRow("Quality", metric["quality"]),
-                _buildTableRow("Impurities", metric["impurities"]),
-                _buildTableRow("Moisture", metric["moisture"]),
+                _buildTableRow("Date", metric["upload_date"]),
+                _buildTableRow("LOT", metric["lot"].toString()),
+                _buildTableRow("Trash", metric["trash"].toString()),
+                _buildTableRow(
+                    "2.5% SL", metric["prediction"]["2.5%sl"].toString()),
+                _buildTableRow(
+                    "50% SL", metric["prediction"]["50%sl"].toString()),
+                _buildTableRow("U.R", metric["prediction"]["U.R"].toString()),
+                _buildTableRow("MIC", metric["prediction"]["MIC"].toString()),
+                _buildTableRow("STR", metric["prediction"]["Str"].toString()),
+                _buildTableRow("ELG", metric["prediction"]["Elg"].toString()),
+                _buildTableRow("AMT", metric["prediction"]["amt"].toString()),
+                _buildTableRow("RD", metric["prediction"]["Rd"].toString()),
+                _buildTableRow("B+", metric["prediction"]["b+"].toString()),
+                _buildTableRow("MR", metric["prediction"]["MR"].toString()),
+                _buildTableRow("C.G", metric["prediction"]["C.G"].toString()),
+                _buildTableRow("SFI", metric["prediction"]["SFI"].toString()),
               ],
             ),
           ),
