@@ -20,7 +20,7 @@ class CheckqualityMetricsController extends GetxController {
        String validJsonString = scannedResult.value.replaceAll("'", '"');
         Map<String, dynamic> responseMap = json.decode(validJsonString);
         
-        Get.to(ShowpredictionQR(mapGrader: responseMap,));
+        Get.to(ShowPredictionQR(mapGrader: responseMap,));
 
         }catch(e){
 

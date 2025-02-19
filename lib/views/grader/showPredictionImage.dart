@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-class ShowpredictionImage extends StatefulWidget {
+class ShowPredictionImage extends StatefulWidget {
   final Map<String, dynamic> mapGrader;
-  ShowpredictionImage({required this.mapGrader});
+  const ShowPredictionImage({Key? key, required this.mapGrader}) : super(key: key);
 
   @override
-  State<ShowpredictionImage> createState() => _ShowpredictionPageState();
+  State<ShowPredictionImage> createState() => _ShowPredictionImageState();
 }
 
-class _ShowpredictionPageState extends State<ShowpredictionImage> {
+class _ShowPredictionImageState extends State<ShowPredictionImage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,72 +16,115 @@ class _ShowpredictionPageState extends State<ShowpredictionImage> {
       appBar: AppBar(
         backgroundColor: const Color(0xFF0077B6),
         title: const Text("Prediction", style: TextStyle(color: Colors.white)),
+        centerTitle: true,
       ),
       body: Center(
         child: Card(
-          elevation: 4,
+          elevation: 6,
+          shadowColor: Colors.black26,
           margin: const EdgeInsets.all(16),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Builder(builder: (context) {
-              var metric = widget.mapGrader;
-
-              if (metric.isEmpty) {
-                return const Center(
-                  child: Text(
-                    "No data available",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                );
-              }
-
-              var predictions = metric["prediction"]?["prediction"];
-              if (predictions == null) {
-                return const Center(child: Text("Invalid data format"));
-              }
-
-              return Table(
-                border: TableBorder.all(width: 1, color: Colors.black26),
-                columnWidths: const {
-                  0: FlexColumnWidth(2),
-                  1: FlexColumnWidth(3),
-                },
+            padding: const EdgeInsets.all(20.0),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  _buildTableRow("Trash", predictions["trash"].toString()),
-                  _buildTableRow("2.5% SL", predictions["2.5%sl"].toString()),
-                  _buildTableRow("50% SL", predictions["50%sl"].toString()),
-                  _buildTableRow("U.R", predictions["U.R"].toString()),
-                  _buildTableRow("MIC", predictions["MIC"].toString()),
-                  _buildTableRow("STR", predictions["Str"].toString()),
-                  _buildTableRow("ELG", predictions["Elg"].toString()),
-                  _buildTableRow("AMT", predictions["amt"].toString()),
-                  _buildTableRow("RD", predictions["Rd"].toString()),
-                  _buildTableRow("B+", predictions["b+"].toString()),
-                  _buildTableRow("MR", predictions["MR"].toString()),
-                  _buildTableRow("C.G", predictions["C.G"].toString()),
-                  _buildTableRow("SFI", predictions["SFI"].toString()),
+                  _buildPredictionTable(),
+
+                  const SizedBox(height: 20),
+
+                  // Buttons with better design
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      _buildButton(Icons.save, "Save", Colors.green),
+                    _buildButton(Icons.rotate_left, "Re-take", Colors.red),
+                    ],
+                  ),
                 ],
-              );
-            }),
+              ),
+            ),
           ),
         ),
       ),
     );
   }
 
+  Widget _buildPredictionTable() {
+    var metric = widget.mapGrader;
+
+    if (metric.isEmpty) {
+      return const Center(
+        child: Text(
+          "No data available",
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
+      );
+    }
+
+    var predictions = metric["prediction"]?["prediction"];
+    if (predictions == null || predictions is! Map) {
+      return const Center(
+        child: Text(
+          "Invalid data format",
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
+      );
+    }
+
+    return Table(
+      border: TableBorder.all(width: 1, color: Colors.black26),
+      columnWidths: const {
+        0: FlexColumnWidth(2),
+        1: FlexColumnWidth(3),
+      },
+      children: predictions.entries.map((entry) {
+        return _buildTableRow(entry.key, entry.value.toString());
+      }).toList(),
+    );
+  }
+
   TableRow _buildTableRow(String label, String value) {
     return TableRow(
+      decoration: BoxDecoration(
+        color:  Colors.blue.shade50 , // Alternating colors
+      ),
       children: [
         Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(label, style: const TextStyle(fontWeight: FontWeight.bold)),
+          padding: const EdgeInsets.all(12.0),
+          child: Text(
+            label.toUpperCase(),
+            style: const TextStyle(fontWeight: FontWeight.bold, ),
+            textAlign: TextAlign.center,
+          ),
         ),
         Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(value),
+          padding: const EdgeInsets.all(12.0),
+          child: Text(
+            value.isNotEmpty ? value : "N/A",
+            style: const TextStyle(),
+            textAlign: TextAlign.center,
+          ),
         ),
       ],
+    );
+  }
+
+   Widget _buildButton(IconData icon, String label, Color color) {
+    return ElevatedButton.icon(
+      onPressed: () {
+        if(label=="Re-take"){
+          Navigator.pop(context);
+        }
+      },
+      icon: Icon(icon, color: Colors.white),
+      label: Text(label, style: const TextStyle(color: Colors.white)),
+      style: ElevatedButton.styleFrom(
+        backgroundColor: color,
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      ),
     );
   }
 }
