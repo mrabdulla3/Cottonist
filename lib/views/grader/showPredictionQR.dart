@@ -17,7 +17,7 @@ class _ShowPredictionQRState extends State<ShowPredictionQR> {
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
-        backgroundColor: Colors.blueAccent,
+        backgroundColor: Color(0xFF65B845),
         title: const Text("Prediction", style: TextStyle(color: Colors.white)),
       ),
       body: Center(

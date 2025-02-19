@@ -18,12 +18,12 @@ class _GraderDashboardState extends State<GraderDashboard> {
   final checkQualityController = Get.put(CheckqualityMetricsController());
   @override
   void reassemble() {
-    super.reassemble();
-    if (Platform.isAndroid) {
-      checkQualityController.controller!.pauseCamera();
-    }
-    checkQualityController.controller!.resumeCamera();
-    print("camera started");
+     super.reassemble();
+  if (Platform.isAndroid && checkQualityController.controller != null) {
+    checkQualityController.controller!.pauseCamera();
+  }
+  checkQualityController.controller?.resumeCamera();
+  print("camera started");
   }
 
   @override
@@ -32,41 +32,54 @@ class _GraderDashboardState extends State<GraderDashboard> {
     super.dispose();
   }
 
-  void _showQRScannerDialog() {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text("Scan QR Code"),
-          content: Container(
-            height: (320/ 800) * MediaQuery.of(context).size.height,
-            width: (220/ 360) * MediaQuery.of(context).size.height, // Adjust height as needed
-            child: QRView(
-              key: qrKey,
-              onQRViewCreated: checkQualityController.onQRViewCreated,
-              overlay: QrScannerOverlayShape(
-                borderColor: Colors.red,
-                borderRadius: 10,
-                borderLength: 30,
-                borderWidth: 10,
+void _showQRScannerDialog() {
+  showGeneralDialog(
+    context: context,
+    barrierDismissible: true,
+    barrierLabel: "QR Scanner",
+    barrierColor: Colors.black, // Semi-transparent background
+    pageBuilder: (context, anim1, anim2) {
+      return Scaffold(
+        backgroundColor: Colors.transparent.withOpacity(0.9), // Ensures full transparency
+        body: Stack(
+          children: [
+            Center(
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width ,
+                height: MediaQuery.of(context).size.height, // Square scanner
+                child: QRView(
+                  key: qrKey,
+                  onQRViewCreated: checkQualityController.onQRViewCreated,
+                  overlay: QrScannerOverlayShape(
+                    borderColor: Colors.blueAccent,
+                    borderRadius: 12,
+                    borderLength: 50,
+                    borderWidth: 10,
+                    cutOutSize: MediaQuery.of(context).size.width * 0.7,
+                  ),
+                  onPermissionSet: (ctrl, p) =>
+                      checkQualityController.onPermissionSet(ctrl, p),
+                ),
               ),
-              onPermissionSet: (ctrl, p) =>
-                  checkQualityController.onPermissionSet(ctrl, p),
             ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                checkQualityController.controller?.pauseCamera();
-                Navigator.pop(context);
-              },
-              child: Text('Close'),
+            Positioned(
+              top: 40,
+              right: 20,
+              child: IconButton(
+                icon: Icon(Icons.close, color: Colors.white, size: 30),
+                onPressed: () {
+                  checkQualityController.controller?.pauseCamera();
+                  Navigator.pop(context);
+                },
+              ),
             ),
           ],
-        );
-      },
-    );
-  }
+        ),
+      );
+    },
+  );
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +89,7 @@ class _GraderDashboardState extends State<GraderDashboard> {
     return Scaffold(
       backgroundColor: const Color(0xFFF7F3E8),
       appBar: AppBar(
-        backgroundColor: const Color(0xFF0077B6),
+        backgroundColor: Color(0xFF65B845),
         title: const Center(
           child: Text(
             "Dashboard",
@@ -144,7 +157,7 @@ class CustomElevatedButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: const Color.fromARGB(255, 131, 235, 100),
+          backgroundColor: Color(0xFF65B845),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),

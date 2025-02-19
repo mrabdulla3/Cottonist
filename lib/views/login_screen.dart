@@ -128,7 +128,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       passwordController.text);
                                 },
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.blue,
+                                  backgroundColor: Color(0xFF65B845),
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10)),
                                   padding: EdgeInsets.symmetric(vertical: 12),
