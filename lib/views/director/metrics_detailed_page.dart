@@ -22,9 +22,9 @@ class MetricDetailPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xFFF7F3E8),
       appBar: AppBar(
-        backgroundColor: const Color(0xFF0077B6),
-        title:
-            const Text("Metric Details", style: TextStyle(color: Colors.white)),
+        backgroundColor: const Color(0xFF65B845),
+        title: const Text("Pridiction Detail",
+            style: TextStyle(color: Colors.white)),
         actions: [
           IconButton(
             icon: const Icon(Icons.share, color: Colors.white),
@@ -39,7 +39,8 @@ class MetricDetailPage extends StatelessWidget {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding:
+                const EdgeInsets.only(top: 25, left: 15, right: 15, bottom: 25),
             child: Table(
               border: TableBorder.all(width: 1, color: Colors.black26),
               columnWidths: const {

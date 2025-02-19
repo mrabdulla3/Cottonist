@@ -20,11 +20,11 @@ class _DirectorDashboardState extends State<DirectorDashboard> {
   @override
   void reassemble() {
     super.reassemble();
-    if (Platform.isAndroid) {
+    if (Platform.isAndroid && checkQualityController.controller != null) {
       checkQualityController.controller!.pauseCamera();
     }
     checkQualityController.controller!.resumeCamera();
-    print("camera started");
+    //print("camera started");
   }
 
   @override
@@ -78,7 +78,7 @@ class _DirectorDashboardState extends State<DirectorDashboard> {
     return Scaffold(
       backgroundColor: const Color(0xFFF7F3E8),
       appBar: AppBar(
-        backgroundColor: const Color(0xFF0077B6),
+        backgroundColor: const Color(0xFF65B845),
         title: const Center(
           child: Text(
             "Dashboard",
@@ -162,7 +162,7 @@ class CustomElevatedButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFF0077B6),
+          backgroundColor: const Color(0xFF65B845),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
