@@ -2,11 +2,6 @@ import 'package:cottonist/views/login_screen.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class AuthPreferences extends GetxController {
-  String? userrole;
-  String? accessToken;
-  Future<void> saveCredentials(
-      String username, String role, String accessToken) async {
 class AuthPreferences extends GetxController{
    String ?userrole;
    String ?accessToken;
