@@ -134,7 +134,7 @@ class _ShowPredictionImageState extends State<ShowPredictionImage> {
         var metric = widget.mapGrader;
         var doc_id = metric["doc_id"];
         if (label == "Cancel") {
-          print(doc_id);
+          print("Doc id is $doc_id");
           await saveController.deleteprediction(doc_id);
           Navigator.pop(context);
         } else if (label == "Save") {

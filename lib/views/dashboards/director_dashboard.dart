@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cottonist/controller/checkQuality_metrics_controller.dart';
+import 'package:cottonist/credentials/auth_preference.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:cottonist/components/addGrader.dart';
@@ -18,13 +19,14 @@ class DirectorDashboard extends StatefulWidget {
 class _DirectorDashboardState extends State<DirectorDashboard> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   final checkQualityController = Get.put(CheckqualityMetricsController());
+  final authPrefernce = Get.put(AuthPreferences());
   @override
   void reassemble() {
     super.reassemble();
     if (Platform.isAndroid && checkQualityController.controller != null) {
       checkQualityController.controller!.pauseCamera();
     }
-    checkQualityController.controller!.resumeCamera();
+    checkQualityController.controller?.resumeCamera();
     //print("camera started");
   }
 
@@ -99,6 +101,11 @@ class _DirectorDashboardState extends State<DirectorDashboard> {
                 fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white),
           ),
         ),
+        actions: [
+          IconButton(onPressed:(){
+             authPrefernce.clearCredentials();
+          }, icon: Icon(Icons.logout,color: Colors.white,))
+        ],
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(

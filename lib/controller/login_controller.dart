@@ -1,3 +1,4 @@
+import 'package:cottonist/credentials/auth_preference.dart';
 import 'package:cottonist/views/dashboards/director_dashboard.dart';
 import 'package:cottonist/views/dashboards/grader_dashboard.dart';
 import 'package:http/http.dart' as http;
@@ -9,7 +10,7 @@ class LoginController extends GetxController {
   RxBool isLoading = false.obs;
   RxBool isPasswordHidden = true.obs;
   RxString accessToken = "".obs;
-
+  final authPreferences = Get.put(AuthPreferences());
   Future<void> login(String username, String password) async {
     String url = 'https://www.shreshtacotton.com/api/login/';
     isLoading.value = true;
@@ -26,6 +27,7 @@ class LoginController extends GetxController {
         var data = jsonDecode(response.body);
         accessToken.value = data['access'];
         print("Login Successful: ${data}");
+        authPreferences.saveCredentials(data['username'], data['role'],data['access']);
         isLoading.value = false;
         if (data['role'] == "grader") {
           Get.offAll(() => GraderDashboard());
