@@ -46,17 +46,6 @@ class _ShowMetricsPageState extends State<ShowMetricsPage> {
     }
   }
 
-  void _shareMetric(Map<String, dynamic> metric) {
-    String shareText =
-        "**Cotton Quality Metrics**\n\n Date: ${metric["date"]}\n"
-        "Quality: ${metric["quality"]}\n"
-        "Impurities: ${metric["impurities"]}\n"
-        "Moisture: ${metric["moisture"]}\n\n"
-        "Shared via Cotton Metrics App.";
-
-    Share.share(shareText);
-  }
-
   void _showMetricDetails(Map<String, dynamic> metric) {
     Navigator.push(
         context,
@@ -143,7 +132,8 @@ class _ShowMetricsPageState extends State<ShowMetricsPage> {
                                 trailing: IconButton(
                                   icon: const Icon(Icons.share,
                                       color: Color(0xFF65B845)),
-                                  onPressed: () => _shareMetric(metric),
+                                  onPressed: () => metricsController
+                                      .shareQrCode(metric["qr_code"]),
                                 ),
                               ),
                             ),

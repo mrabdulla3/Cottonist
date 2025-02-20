@@ -7,6 +7,10 @@ class AuthPreferences extends GetxController {
   String? accessToken;
   Future<void> saveCredentials(
       String username, String role, String accessToken) async {
+class AuthPreferences extends GetxController{
+   String ?userrole;
+   String ?accessToken;
+   Future<void> saveCredentials(String username,String role, String accessToken) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('username', username);
     await prefs.setString('role', role);

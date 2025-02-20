@@ -1,22 +1,14 @@
+import 'package:cottonist/controller/showMetrics_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:share_plus/share_plus.dart';
 
 class MetricDetailPage extends StatelessWidget {
   final Map<String, dynamic> metric;
 
-  const MetricDetailPage({super.key, required this.metric});
+  MetricDetailPage({super.key, required this.metric});
 
-  void _shareMetric(BuildContext context) {
-    String shareText =
-        "**Cotton Quality Metrics**\n\n Date: ${metric["date"]}\n"
-        "Quality: ${metric["quality"]}\n"
-        "Impurities: ${metric["impurities"]}\n"
-        "Moisture: ${metric["moisture"]}\n\n"
-        "Shared via Cotton Metrics App.";
-
-    Share.share(shareText);
-  }
+  final showMetric = Get.put(ShowmetricsController());
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +26,10 @@ class MetricDetailPage extends StatelessWidget {
         actions: [
           IconButton(
             icon: const Icon(Icons.share, color: Colors.white),
-            onPressed: () => _shareMetric(context),
+            onPressed: () {
+              print(metric["qr_code"]);
+              showMetric.shareQrCode(metric["qr_code"]);
+            },
           ),
         ],
       ),

@@ -1,7 +1,13 @@
 import 'dart:convert';
+import 'dart:io';
+import 'dart:ui' as ui;
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:qr_flutter/qr_flutter.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:flutter/material.dart';
 
 class ShowmetricsController extends GetxController {
   var metricsData =
@@ -38,5 +44,34 @@ class ShowmetricsController extends GetxController {
       return metricDate.isAfter(startDate.subtract(const Duration(days: 1))) &&
           metricDate.isBefore(endDate.add(const Duration(days: 1)));
     }).toList();
+  }
+
+  Future<void> shareQrCode(String qrImageUrl) async {
+    try {
+      if (qrImageUrl.isEmpty) {
+        print("Error: QR code image URL is empty!");
+        return;
+      }
+
+      //Download the image
+      var response = await http.get(Uri.parse(qrImageUrl));
+      if (response.statusCode == 200) {
+        //Get temporary directory
+        final tempDir = await getTemporaryDirectory();
+        final filePath = '${tempDir.path}/qr_code.png';
+
+        //Save the image file
+        File file = File(filePath);
+        await file.writeAsBytes(response.bodyBytes);
+
+        //Share the image
+        await Share.shareXFiles([XFile(file.path)], text: "Scan this QR code!");
+      } else {
+        print(
+            "Error: Failed to download QR code image. Status Code: ${response.statusCode}");
+      }
+    } catch (e) {
+      print("Error sharing QR code image: $e");
+    }
   }
 }
