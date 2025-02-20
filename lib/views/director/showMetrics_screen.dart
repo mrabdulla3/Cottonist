@@ -2,6 +2,7 @@ import 'package:cottonist/controller/showMetrics_controller.dart';
 import 'package:cottonist/views/director/metrics_detailed_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -70,8 +71,13 @@ class _ShowMetricsPageState extends State<ShowMetricsPage> {
       backgroundColor: const Color(0xFFF7F3E8),
       appBar: AppBar(
         backgroundColor: const Color(0xFF65B845),
-        title:
-            const Text("Show Metrics", style: TextStyle(color: Colors.white)),
+        title: Center(
+          child: Text("Show Metrics",
+              style: GoogleFonts.lato(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white)),
+        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.calendar_today, color: Colors.white),
@@ -89,7 +95,8 @@ class _ShowMetricsPageState extends State<ShowMetricsPage> {
               startDate == null || endDate == null
                   ? "Select Date Range"
                   : "Metrics from ${DateFormat('yyyy-MM-dd').format(startDate!)} to ${DateFormat('yyyy-MM-dd').format(endDate!)}",
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: GoogleFonts.raleway(
+                  fontWeight: FontWeight.w600, fontSize: 18),
             ),
             const SizedBox(height: 10),
 
@@ -124,10 +131,15 @@ class _ShowMetricsPageState extends State<ShowMetricsPage> {
                                       width: 80,
                                     )),
                                 title: Text("Pridiction: ${index + 1}",
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold)),
-                                subtitle:
-                                    Text("Date: ${metric["upload_date"]}"),
+                                    style: GoogleFonts.raleway(
+                                      fontWeight: FontWeight.w600,
+                                    )),
+                                subtitle: Text(
+                                  "Date: ${metric["upload_date"]}",
+                                  style: GoogleFonts.raleway(
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
                                 trailing: IconButton(
                                   icon: const Icon(Icons.share,
                                       color: Color(0xFF65B845)),

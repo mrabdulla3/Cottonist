@@ -1,3 +1,4 @@
+import 'package:cottonist/credentials/auth_preference.dart';
 import 'package:cottonist/views/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,7 +17,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>(); // Form key to manage validation
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-
+  
+  
   void validateAndLogin() {
     if (_formKey.currentState!.validate()) {
       loginController.login(usernameController.text, passwordController.text);
