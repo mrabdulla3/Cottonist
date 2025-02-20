@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthPreferences extends GetxController{
    String ?userrole;
-   String?accessToken;
+   String ?accessToken;
    Future<void> saveCredentials(String username,String role, String accessToken) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('username', username);
