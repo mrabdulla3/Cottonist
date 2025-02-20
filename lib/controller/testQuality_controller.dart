@@ -13,7 +13,6 @@ import 'package:image/image.dart' as img;
 class TestQualityMetricsController extends GetxController {
   var selectedImage = Rxn<File?>();
   RxMap<String, dynamic> MapPred = <String, dynamic>{}.obs;
-  final _loginController = Get.put(LoginController());
   RxBool isLoading = false.obs;
   final int maxPayloadSize = 46949; // 46KB limit
 
@@ -71,7 +70,6 @@ class TestQualityMetricsController extends GetxController {
         Uri.parse("https://www.shreshtacotton.com/api/upload-and-predict/");
     try {
       var request = http.MultipartRequest('POST', url);
-      print(auth.accessToken);
       request.headers['Authorization'] = 'Bearer ${auth.accessToken}';
       request.headers['Accept'] = 'application/json';
 
@@ -85,17 +83,22 @@ class TestQualityMetricsController extends GetxController {
       ));
 
       var response = await request.send();
-      print("Response Status Code: ${response.statusCode}");
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         var responseData = await response.stream.bytesToString();
         Map<String, dynamic> responseMap = json.decode(responseData);
-        print("Response Data: $responseMap");
+        MapPred.value = responseMap;
+        Get.snackbar("Success", "Analysis Complete !");
+        selectedImage.value = null;
+        Get.to(() => ShowPredictionImage(
+              mapGrader: MapPred,
+            ));
 
         MapPred.value = responseMap;
         Get.snackbar("Success", "Analysis Complete!");
         selectedImage.value = null;
         Get.to(() => ShowPredictionImage(mapGrader: MapPred));
+
       } else {
         Get.snackbar("Error", "Failed to analyze image.");
       }

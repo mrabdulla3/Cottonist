@@ -111,8 +111,8 @@ class _ShowMetricsPageState extends State<ShowMetricsPage> {
                               margin: const EdgeInsets.symmetric(vertical: 8),
                               child: ListTile(
                                 leading: ClipRRect(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10)),
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(10)),
                                     child: Image.network(
                                       metric["image"],
                                       fit: BoxFit.cover,

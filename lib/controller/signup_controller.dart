@@ -37,9 +37,8 @@ class SignupController extends GetxController {
       }
 
       var response = await request.send();
-      print(response.statusCode);
       if (response.statusCode == 200 || response.statusCode == 201) {
-        Get.offAll(() => DirectorDashboard());
+        Get.offAll(() => const DirectorDashboard());
         Get.snackbar(
           'Success',
           'Signup Successful!',
@@ -64,9 +63,9 @@ class SignupController extends GetxController {
         backgroundColor: Colors.red,
         colorText: Colors.white,
         borderRadius: 10,
-        margin: EdgeInsets.all(10),
-        duration: Duration(seconds: 3),
-        icon: Icon(Icons.check_circle, color: Colors.white),
+        margin: const EdgeInsets.all(10),
+        duration: const Duration(seconds: 3),
+        icon: const Icon(Icons.check_circle, color: Colors.white),
       );
     } finally {
       isLoading.value = false;
@@ -75,13 +74,10 @@ class SignupController extends GetxController {
 
   // Pick Image
   Future<void> pickLogo() async {
-    //print("Yesss");
     final pickedFile =
         await ImagePicker().pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       selectedImage.value = await File(pickedFile.path);
     }
-
-    print(selectedImage.value);
   }
 }

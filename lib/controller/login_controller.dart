@@ -22,17 +22,16 @@ class LoginController extends GetxController {
             "password": password.trim(),
           }));
 
-      //print(response.statusCode);
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
         accessToken.value = data['access'];
-        print("Login Successful: ${data}");
-        authPreferences.saveCredentials(data['username'], data['role'],data['access']);
+        authPreferences.saveCredentials(
+            data['username'], data['role'], data['access']);
         isLoading.value = false;
         if (data['role'] == "grader") {
-          Get.offAll(() => GraderDashboard());
+          Get.offAll(() => const GraderDashboard());
         } else if (data['role'] == "Director") {
-          Get.offAll(() => DirectorDashboard());
+          Get.offAll(() => const DirectorDashboard());
         }
         Get.snackbar(
           'Success', // Title
@@ -41,12 +40,11 @@ class LoginController extends GetxController {
           backgroundColor: Colors.green,
           colorText: Colors.white,
           borderRadius: 10,
-          margin: EdgeInsets.all(10),
-          duration: Duration(seconds: 3),
-          icon: Icon(Icons.check_circle, color: Colors.white),
+          margin: const EdgeInsets.all(10),
+          duration: const Duration(seconds: 3),
+          icon: const Icon(Icons.check_circle, color: Colors.white),
         );
       } else {
-        print("Login Failed: ${response.body}");
         isLoading.value = false;
         Get.snackbar(
           'Login Failed', // Title
@@ -55,25 +53,23 @@ class LoginController extends GetxController {
           backgroundColor: Colors.red,
           colorText: Colors.white,
           borderRadius: 10,
-          margin: EdgeInsets.all(10),
-          duration: Duration(seconds: 3),
-          icon: Icon(Icons.check_circle, color: Colors.white),
+          margin: const EdgeInsets.all(10),
+          duration: const Duration(seconds: 3),
+          icon: const Icon(Icons.check_circle, color: Colors.white),
         );
       }
     } catch (e) {
-      print(e.toString());
-
       isLoading.value = false;
       Get.snackbar(
         'ERROR Occured', // Title
-        '${e.toString()}', // Message
+        '$e', // Message
         snackPosition: SnackPosition.BOTTOM, // Position
         backgroundColor: Colors.red,
         colorText: Colors.white,
         borderRadius: 10,
-        margin: EdgeInsets.all(10),
-        duration: Duration(seconds: 3),
-        icon: Icon(Icons.check_circle, color: Colors.white),
+        margin: const EdgeInsets.all(10),
+        duration: const Duration(seconds: 3),
+        icon: const Icon(Icons.check_circle, color: Colors.white),
       );
     }
   }

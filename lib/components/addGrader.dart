@@ -4,11 +4,12 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AddGrader extends StatefulWidget {
+  const AddGrader({super.key});
   @override
-  _AddGraderState createState() => _AddGraderState();
+  AddGraderState createState() => AddGraderState();
 }
 
-class _AddGraderState extends State<AddGrader> {
+class AddGraderState extends State<AddGrader> {
   final _formKey = GlobalKey<FormState>();
   final signupController = Get.put(AddgraderController());
 
@@ -37,7 +38,6 @@ class _AddGraderState extends State<AddGrader> {
           child: Column(
             children: [
               SizedBox(height: screenHeight * 0.1),
-
               // Logo
               Center(
                 child: Image.asset(
@@ -47,7 +47,6 @@ class _AddGraderState extends State<AddGrader> {
                 ),
               ),
               SizedBox(height: screenHeight * 0.02),
-
               Text(
                 "Grader Form",
                 style: GoogleFonts.aboreto(
@@ -55,7 +54,6 @@ class _AddGraderState extends State<AddGrader> {
               ),
 
               SizedBox(height: screenHeight * 0.03),
-
               // Sign-Up Form Container
               Container(
                 width: screenWidth * 0.85,
@@ -63,7 +61,7 @@ class _AddGraderState extends State<AddGrader> {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
+                  boxShadow: const [
                     BoxShadow(
                       color: Colors.black12,
                       blurRadius: 10,
@@ -96,7 +94,6 @@ class _AddGraderState extends State<AddGrader> {
                         "Password", passwordController, Icons.lock, true),
                     _buildTextField("Confirm Password", confirmPassController,
                         Icons.lock, true),
-
                     // Role Dropdown
                     Padding(
                       padding: EdgeInsets.only(
@@ -108,7 +105,7 @@ class _AddGraderState extends State<AddGrader> {
                           labelText: "Select Role",
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10)),
-                          prefixIcon: Icon(Icons.people),
+                          prefixIcon: const Icon(Icons.people),
                         ),
                         items: role.map((String role) {
                           return DropdownMenuItem<String>(
@@ -123,7 +120,6 @@ class _AddGraderState extends State<AddGrader> {
                         },
                       ),
                     ),
-
                     // Logo Upload
                     Row(
                       children: [
@@ -132,26 +128,25 @@ class _AddGraderState extends State<AddGrader> {
                               ? const Text("No logo selected")
                               : const Text("logo is selected"),
                         ),
-                        Spacer(),
+                        const Spacer(),
                         ElevatedButton.icon(
                           onPressed: () {
                             signupController.pickLogo();
                           },
                           style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xFF65B845)),
-                          icon: Icon(
+                              backgroundColor: const Color(0xFF65B845)),
+                          icon: const Icon(
                             Icons.upload,
                             color: Colors.white,
                           ),
-                          label: Text(
+                          label: const Text(
                             "Upload Logo",
                             style: TextStyle(color: Colors.white),
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(height: 10),
-
+                    const SizedBox(height: 10),
                     SizedBox(
                       width: double.infinity,
                       child: Obx(
@@ -165,8 +160,9 @@ class _AddGraderState extends State<AddGrader> {
                               )
                             : ElevatedButton(
                                 onPressed: () {
-                                  if (!_formKey.currentState!.validate())
+                                  if (!_formKey.currentState!.validate()) {
                                     return;
+                                  }
                                   signupController.signUp(
                                       orgNameController.text,
                                       orgAddController.text,
@@ -179,10 +175,11 @@ class _AddGraderState extends State<AddGrader> {
                                       signupController.selectedImage.value!);
                                 },
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: Color(0xFF65B845),
+                                  backgroundColor: const Color(0xFF65B845),
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10)),
-                                  padding: EdgeInsets.symmetric(vertical: 12),
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 12),
                                 ),
                                 child: Text("Add Grader",
                                     style: GoogleFonts.lato(
@@ -192,7 +189,7 @@ class _AddGraderState extends State<AddGrader> {
                               ),
                       ),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                   ],
                 ),
               ),
@@ -222,15 +219,19 @@ class _AddGraderState extends State<AddGrader> {
         validator: (value) {
           if (value == null || value.isEmpty) return "$label is required";
           if (label == "Email" &&
-              !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value))
+              !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
             return "Enter a valid email";
+          }
           if (label == "Mobile Number" &&
-              !RegExp(r'^[0-9]{10}$').hasMatch(value))
+              !RegExp(r'^[0-9]{10}$').hasMatch(value)) {
             return "Enter a valid mobile number";
-          if (label == "Password" && value.length < 6)
+          }
+          if (label == "Password" && value.length < 6) {
             return "Password must be at least 6 characters";
-          if (label == "Confirm Password" && value != passwordController.text)
+          }
+          if (label == "Confirm Password" && value != passwordController.text) {
             return "Passwords do not match";
+          }
           return null;
         },
       ),

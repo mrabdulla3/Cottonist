@@ -26,7 +26,6 @@ class ShowmetricsController extends GetxController {
 
         metricsData.value =
             List<Map<String, dynamic>>.from(data["images"]); // Store API data
-        //print(metricsData);
       } else {
         print("Error: ${response.statusCode} - ${response.body}");
       }
