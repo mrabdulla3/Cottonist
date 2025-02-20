@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:cottonist/controller/login_controller.dart';
+import 'package:cottonist/credentials/auth_preference.dart';
 import 'package:cottonist/views/grader/showPredictionImage.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -24,6 +25,7 @@ class TestQualityMetricsController extends GetxController {
 
   // Function to send image to AI model (to be implemented)
   Future<void> sendToAI() async {
+    final auth = Get.put(AuthPreferences());
     isLoading.value = true;
     if (selectedImage.value == null) {
       Get.snackbar("Error", "Please select an image first",
@@ -36,7 +38,7 @@ class TestQualityMetricsController extends GetxController {
     try {
       var request = http.MultipartRequest('POST', url);
       request.headers['Authorization'] =
-          'Bearer ${_loginController.accessToken.value}';
+          'Bearer ${auth.accessToken}';
       request.headers['Accept'] = 'application/json';
 
       request.files.add(await http.MultipartFile.fromPath(

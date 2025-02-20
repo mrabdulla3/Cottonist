@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cottonist/controller/checkQuality_metrics_controller.dart';
+import 'package:cottonist/credentials/auth_preference.dart';
 import 'package:cottonist/views/grader/testQuality_metrics.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,6 +17,7 @@ class GraderDashboard extends StatefulWidget {
 class _GraderDashboardState extends State<GraderDashboard> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   final checkQualityController = Get.put(CheckqualityMetricsController());
+  final authPreference= Get.put(AuthPreferences());
   @override
   void reassemble() {
      super.reassemble();
@@ -96,6 +98,11 @@ void _showQRScannerDialog() {
             style: TextStyle(color: Colors.white),
           ),
         ),
+        actions: [
+          IconButton(onPressed:(){
+             authPreference.clearCredentials();
+          }, icon: Icon(Icons.logout,color: Colors.white,))
+        ],
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(
