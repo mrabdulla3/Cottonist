@@ -27,7 +27,6 @@ class _DirectorDashboardState extends State<DirectorDashboard> {
       checkQualityController.controller!.pauseCamera();
     }
     checkQualityController.controller?.resumeCamera();
-    //print("camera started");
   }
 
   @override
@@ -71,7 +70,7 @@ class _DirectorDashboardState extends State<DirectorDashboard> {
                 top: 40,
                 right: 20,
                 child: IconButton(
-                  icon: Icon(Icons.close, color: Colors.white, size: 30),
+                  icon: const Icon(Icons.close, color: Colors.white, size: 30),
                   onPressed: () {
                     checkQualityController.controller?.pauseCamera();
                     Navigator.pop(context);
@@ -102,9 +101,14 @@ class _DirectorDashboardState extends State<DirectorDashboard> {
           ),
         ),
         actions: [
-          IconButton(onPressed:(){
-             authPrefernce.clearCredentials();
-          }, icon: Icon(Icons.logout,color: Colors.white,))
+          IconButton(
+              onPressed: () {
+                authPrefernce.clearCredentials();
+              },
+              icon: const Icon(
+                Icons.logout,
+                color: Colors.white,
+              ))
         ],
       ),
       body: Padding(
@@ -123,7 +127,7 @@ class _DirectorDashboardState extends State<DirectorDashboard> {
                     text: "Add Grader",
                     icon: Icons.person_add,
                     onPressed: () {
-                      Get.to(() => AddGrader());
+                      Get.to(() => const AddGrader());
                     },
                   ),
                 ),
@@ -148,7 +152,7 @@ class _DirectorDashboardState extends State<DirectorDashboard> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => ShowMetricsPage(),
+                        builder: (context) => const ShowMetricsPage(),
                       ));
                 },
               ),

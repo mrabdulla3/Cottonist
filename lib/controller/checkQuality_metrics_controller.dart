@@ -9,26 +9,23 @@ class CheckqualityMetricsController extends GetxController {
   Rx<String> scannedResult = "".obs;
 
   void onQRViewCreated(QRViewController controller) {
-    print("OnQRCODECREATED");
     this.controller = controller;
     controller.scannedDataStream.listen((scanData) {
       if (scanData.code != null) {
-        print("Scanned QR Code: ${scanData.code}");
-        try{
-           scannedResult.value = scanData.code!;
-       // CheckQulality metrics = CheckQulality.fromJson(scannedResult.value);
-       String validJsonString = scannedResult.value.replaceAll("'", '"');
-        Map<String, dynamic> responseMap = json.decode(validJsonString);
-        
-        Get.to( ()=>
-          ShowPredictionQR(mapGrader: responseMap,));
-        }catch (e) {
-          print(e);
+        try {
+          scannedResult.value = scanData.code!;
+          // CheckQulality metrics = CheckQulality.fromJson(scannedResult.value);
+          String validJsonString = scannedResult.value.replaceAll("'", '"');
+          Map<String, dynamic> responseMap = json.decode(validJsonString);
+
+          Get.to(() => ShowPredictionQR(
+                mapGrader: responseMap,
+              ));
+        } catch (e) {
           Get.snackbar("Error", "$e");
         }
       }
     });
-    print(scannedResult);
   }
 
   void onPermissionSet(QRViewController ctrl, bool p) {

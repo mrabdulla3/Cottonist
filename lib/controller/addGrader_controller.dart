@@ -31,7 +31,6 @@ class AddgraderController extends GetxController {
           'logo': image
         }),
       );
-      print(response.body);
       if (response.statusCode == 200 || response.statusCode == 201) {
         Get.snackbar(
           'Success',
@@ -48,9 +47,9 @@ class AddgraderController extends GetxController {
           backgroundColor: Colors.redAccent,
           colorText: Colors.white,
           borderRadius: 10,
-          margin: EdgeInsets.all(10),
-          duration: Duration(seconds: 3),
-          icon: Icon(Icons.check_circle, color: Colors.white),
+          margin: const EdgeInsets.all(10),
+          duration: const Duration(seconds: 3),
+          icon: const Icon(Icons.check_circle, color: Colors.white),
         );
       } else {
         Get.snackbar(
@@ -69,9 +68,9 @@ class AddgraderController extends GetxController {
         backgroundColor: Colors.green,
         colorText: Colors.white,
         borderRadius: 10,
-        margin: EdgeInsets.all(10),
-        duration: Duration(seconds: 3),
-        icon: Icon(Icons.check_circle, color: Colors.white),
+        margin: const EdgeInsets.all(10),
+        duration: const Duration(seconds: 3),
+        icon: const Icon(Icons.check_circle, color: Colors.white),
       );
     } finally {
       isLoading.value = false;
@@ -80,14 +79,11 @@ class AddgraderController extends GetxController {
 
   // Pick Image
   Future<void> pickLogo() async {
-    //print("Yesss");
     final pickedFile =
         await ImagePicker().pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       File imageFile = File(pickedFile.path);
       selectedImage.value = await imageFile.readAsBytes();
     }
-
-    // print(selectedImage.value);
   }
 }

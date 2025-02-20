@@ -17,15 +17,14 @@ class GraderDashboard extends StatefulWidget {
 class _GraderDashboardState extends State<GraderDashboard> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   final checkQualityController = Get.put(CheckqualityMetricsController());
-  final authPreference= Get.put(AuthPreferences());
+  final authPreference = Get.put(AuthPreferences());
   @override
   void reassemble() {
-     super.reassemble();
-  if (Platform.isAndroid && checkQualityController.controller != null) {
-    checkQualityController.controller!.pauseCamera();
-  }
-  checkQualityController.controller?.resumeCamera();
-  print("camera started");
+    super.reassemble();
+    if (Platform.isAndroid && checkQualityController.controller != null) {
+      checkQualityController.controller!.pauseCamera();
+    }
+    checkQualityController.controller?.resumeCamera();
   }
 
   @override
@@ -34,54 +33,54 @@ class _GraderDashboardState extends State<GraderDashboard> {
     super.dispose();
   }
 
-void _showQRScannerDialog() {
-  showGeneralDialog(
-    context: context,
-    barrierDismissible: true,
-    barrierLabel: "QR Scanner",
-    barrierColor: Colors.black, // Semi-transparent background
-    pageBuilder: (context, anim1, anim2) {
-      return Scaffold(
-        backgroundColor: Colors.transparent.withOpacity(0.9), // Ensures full transparency
-        body: Stack(
-          children: [
-            Center(
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width ,
-                height: MediaQuery.of(context).size.height, // Square scanner
-                child: QRView(
-                  key: qrKey,
-                  onQRViewCreated: checkQualityController.onQRViewCreated,
-                  overlay: QrScannerOverlayShape(
-                    borderColor: Colors.blueAccent,
-                    borderRadius: 12,
-                    borderLength: 50,
-                    borderWidth: 10,
-                    cutOutSize: MediaQuery.of(context).size.width * 0.7,
+  void _showQRScannerDialog() {
+    showGeneralDialog(
+      context: context,
+      barrierDismissible: true,
+      barrierLabel: "QR Scanner",
+      barrierColor: Colors.black, // Semi-transparent background
+      pageBuilder: (context, anim1, anim2) {
+        return Scaffold(
+          backgroundColor:
+              Colors.transparent.withOpacity(0.9), // Ensures full transparency
+          body: Stack(
+            children: [
+              Center(
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height, // Square scanner
+                  child: QRView(
+                    key: qrKey,
+                    onQRViewCreated: checkQualityController.onQRViewCreated,
+                    overlay: QrScannerOverlayShape(
+                      borderColor: Colors.blueAccent,
+                      borderRadius: 12,
+                      borderLength: 50,
+                      borderWidth: 10,
+                      cutOutSize: MediaQuery.of(context).size.width * 0.7,
+                    ),
+                    onPermissionSet: (ctrl, p) =>
+                        checkQualityController.onPermissionSet(ctrl, p),
                   ),
-                  onPermissionSet: (ctrl, p) =>
-                      checkQualityController.onPermissionSet(ctrl, p),
                 ),
               ),
-            ),
-            Positioned(
-              top: 40,
-              right: 20,
-              child: IconButton(
-                icon: Icon(Icons.close, color: Colors.white, size: 30),
-                onPressed: () {
-                  checkQualityController.controller?.pauseCamera();
-                  Navigator.pop(context);
-                },
+              Positioned(
+                top: 40,
+                right: 20,
+                child: IconButton(
+                  icon: const Icon(Icons.close, color: Colors.white, size: 30),
+                  onPressed: () {
+                    checkQualityController.controller?.pauseCamera();
+                    Navigator.pop(context);
+                  },
+                ),
               ),
-            ),
-          ],
-        ),
-      );
-    },
-  );
-}
-
+            ],
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +90,7 @@ void _showQRScannerDialog() {
     return Scaffold(
       backgroundColor: const Color(0xFFF7F3E8),
       appBar: AppBar(
-        backgroundColor: Color(0xFF65B845),
+        backgroundColor: const Color(0xFF65B845),
         title: const Center(
           child: Text(
             "Dashboard",
@@ -99,9 +98,14 @@ void _showQRScannerDialog() {
           ),
         ),
         actions: [
-          IconButton(onPressed:(){
-             authPreference.clearCredentials();
-          }, icon: Icon(Icons.logout,color: Colors.white,))
+          IconButton(
+              onPressed: () {
+                authPreference.clearCredentials();
+              },
+              icon: const Icon(
+                Icons.logout,
+                color: Colors.white,
+              ))
         ],
       ),
       body: Padding(
@@ -122,7 +126,8 @@ void _showQRScannerDialog() {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => TestQualityMetricsScreen(),
+                            builder: (context) =>
+                                const TestQualityMetricsScreen(),
                           ));
                     }),
                 SizedBox(width: width * 0.02),
@@ -164,7 +169,7 @@ class CustomElevatedButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: Color(0xFF65B845),
+          backgroundColor: const Color(0xFF65B845),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
