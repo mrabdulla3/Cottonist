@@ -1,4 +1,5 @@
 {
     "java.configuration.updateBuildConfiguration": "interactive",
-    "cmake.sourceDirectory": "D:/Flutter_app_new/Cottonist/windows/runner"
+    "cmake.sourceDirectory": "D:/Flutter_app_new/Cottonist/windows/runner",
+    "cmake.ignoreCMakeListsMissing": true
 }
