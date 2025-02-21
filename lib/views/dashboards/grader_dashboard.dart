@@ -5,6 +5,7 @@ import 'package:cottonist/credentials/auth_preference.dart';
 import 'package:cottonist/views/grader/testQuality_metrics.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:qr_code_scanner_plus/qr_code_scanner_plus.dart';
 
 class GraderDashboard extends StatefulWidget {
@@ -91,10 +92,11 @@ class _GraderDashboardState extends State<GraderDashboard> {
       backgroundColor: const Color(0xFFF7F3E8),
       appBar: AppBar(
         backgroundColor: const Color(0xFF65B845),
-        title: const Center(
+        title: Center(
           child: Text(
             "Dashboard",
-            style: TextStyle(color: Colors.white),
+            style: GoogleFonts.lato(
+                fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white),
           ),
         ),
         actions: [
@@ -190,11 +192,8 @@ class CustomElevatedButton extends StatelessWidget {
               child: Text(
                 text,
                 textAlign: TextAlign.center,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: GoogleFonts.raleway(
+                    fontWeight: FontWeight.w600, color: Colors.white),
               ),
             ),
           ],

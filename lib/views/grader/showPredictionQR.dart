@@ -1,6 +1,5 @@
-
 import 'package:flutter/material.dart';
-
+import 'package:google_fonts/google_fonts.dart';
 
 class ShowPredictionQR extends StatefulWidget {
   final Map<String, dynamic> mapGrader;
@@ -17,14 +16,21 @@ class _ShowPredictionQRState extends State<ShowPredictionQR> {
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
-        backgroundColor: Color(0xFF65B845),
-        title: const Text("Prediction", style: TextStyle(color: Colors.white)),
+        backgroundColor: const Color(0xFF65B845),
+        title: Center(
+          child: Text("Prediction",
+              style: GoogleFonts.lato(
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white,
+                  fontSize: 20)),
+        ),
       ),
       body: Center(
         child: Card(
           elevation: 6,
           margin: const EdgeInsets.all(16),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           child: Padding(
             padding: const EdgeInsets.all(20),
             child: Column(
@@ -65,7 +71,8 @@ class _ShowPredictionQRState extends State<ShowPredictionQR> {
       children: [
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Text(label.toUpperCase(), style: const TextStyle(fontWeight: FontWeight.bold)),
+          child: Text(label.toUpperCase(),
+              style: const TextStyle(fontWeight: FontWeight.bold)),
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
@@ -74,5 +81,4 @@ class _ShowPredictionQRState extends State<ShowPredictionQR> {
       ],
     );
   }
-
 }
