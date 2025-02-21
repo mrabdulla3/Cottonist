@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
@@ -10,8 +11,7 @@ class SavePredictionController extends GetxController {
     try {
       isLoadingS.value = true;
       var response = await http.post(
-          Uri.parse(
-              "https://www.shreshtacotton.com/api/grader/save-predictions/"),
+          Uri.parse("${dotenv.env['API_URL']}/api/grader/save-predictions/"),
           headers: {"Content-Type": "application/json"},
           body: jsonEncode({
             "doc_id": doc_id,
@@ -37,8 +37,7 @@ class SavePredictionController extends GetxController {
     try {
       isLoadingD.value = true;
       var response = await http.post(
-          Uri.parse(
-              "https://www.shreshtacotton.com/api/grader/save-predictions/"),
+          Uri.parse("${dotenv.env['API_URL']}/api/grader/save-predictions/"),
           headers: {"Content-Type": "application/json"},
           body: jsonEncode({
             "doc_id": doc_id,

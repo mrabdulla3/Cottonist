@@ -27,7 +27,6 @@ class MetricDetailPage extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.share, color: Colors.white),
             onPressed: () {
-              print(metric["qr_code"]);
               showMetric.shareQrCode(metric["qr_code"]);
             },
           ),

@@ -130,17 +130,15 @@ class _ShowPredictionImageState extends State<ShowPredictionImage> {
   Widget _buildButton(IconData icon, String label, Color color) {
     return ElevatedButton.icon(
       onPressed: () async {
-        print("45");
         var metric = widget.mapGrader;
         var doc_id = metric["doc_id"];
         if (label == "Cancel") {
-          print("Doc id is $doc_id");
           await saveController.deleteprediction(doc_id);
           Navigator.pop(context);
         } else if (label == "Save") {
-          print(doc_id);
-
-          await saveController.saveprediction(doc_id,);
+          await saveController.saveprediction(
+            doc_id,
+          );
           Navigator.pop(context);
         }
       },

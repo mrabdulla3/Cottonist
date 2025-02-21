@@ -4,8 +4,15 @@ import 'package:cottonist/views/dashboards/grader_dashboard.dart';
 import 'package:cottonist/views/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized(); // Ensure Flutter is initialized
+  try {
+    await dotenv.load(fileName: ".env"); // Load environment variables
+  } catch (e) {
+    throw Exception('Error loading .env file: $e'); // Print error if any
+  }
   runApp(MyApp());
 }
 
@@ -31,9 +38,9 @@ class MyApp extends StatelessWidget {
                 child: CircularProgressIndicator()); // Show loading indicator
           } else if (snapshot.hasData && snapshot.data == true) {
             if (authPreferences.userrole == "grader") {
-              return GraderDashboard();
+              return const GraderDashboard();
             } else if (authPreferences.userrole == "Director") {
-              return DirectorDashboard();
+              return const DirectorDashboard();
             } else {
               return LoginScreen();
             }
