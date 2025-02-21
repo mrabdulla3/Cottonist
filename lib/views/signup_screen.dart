@@ -4,11 +4,12 @@ import 'package:cottonist/controller/signup_controller.dart';
 import 'package:cottonist/views/login_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
   @override
-  _SignUpScreenState createState() => _SignUpScreenState();
+  SignUpScreenState createState() => SignUpScreenState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
+class SignUpScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
   final signupController = Get.put(SignupController());
 
@@ -62,7 +63,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
+                  boxShadow: const [
                     BoxShadow(
                       color: Colors.black12,
                       blurRadius: 10,
@@ -107,7 +108,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           labelText: "Select Role",
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10)),
-                          prefixIcon: Icon(Icons.people),
+                          prefixIcon: const Icon(Icons.people),
                         ),
                         items: roles.map((String role) {
                           return DropdownMenuItem<String>(
@@ -131,25 +132,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               ? const Text("No logo selected")
                               : const Text("logo is selected"),
                         ),
-                        Spacer(),
+                        const Spacer(),
                         ElevatedButton.icon(
                           onPressed: () {
                             signupController.pickLogo();
                           },
                           style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xFF65B845)),
-                          icon: Icon(
+                              backgroundColor: const Color(0xFF65B845)),
+                          icon: const Icon(
                             Icons.upload,
                             color: Colors.white,
                           ),
-                          label: Text(
+                          label: const Text(
                             "Upload Logo",
                             style: TextStyle(color: Colors.white),
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
 
                     SizedBox(
                       width: double.infinity,
@@ -164,8 +165,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               )
                             : ElevatedButton(
                                 onPressed: () {
-                                  if (!_formKey.currentState!.validate())
+                                  if (!_formKey.currentState!.validate()) {
                                     return;
+                                  }
                                   signupController.signUp(
                                       orgNameController.text,
                                       orgAddController.text,
@@ -178,10 +180,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       signupController.selectedImage.value!);
                                 },
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: Color(0xFF65B845),
+                                  backgroundColor: const Color(0xFF65B845),
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10)),
-                                  padding: EdgeInsets.symmetric(vertical: 12),
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 12),
                                 ),
                                 child: const Text("Create Account",
                                     style: TextStyle(
@@ -189,7 +192,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               ),
                       ),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                   ],
                 ),
               ),
@@ -199,7 +202,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               const Text("Already have an account?"),
               TextButton(
                 onPressed: () {
-                  Get.to(() => LoginScreen());
+                  Get.to(() => const LoginScreen());
                 },
                 child: const Text(
                   "Login",
@@ -231,15 +234,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
         validator: (value) {
           if (value == null || value.isEmpty) return "$label is required";
           if (label == "Email" &&
-              !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value))
+              !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
             return "Enter a valid email";
+          }
+
           if (label == "Mobile Number" &&
-              !RegExp(r'^[0-9]{10}$').hasMatch(value))
+              !RegExp(r'^[0-9]{10}$').hasMatch(value)) {
             return "Enter a valid mobile number";
-          if (label == "Password" && value.length < 6)
+          }
+
+          if (label == "Password" && value.length < 6) {
             return "Password must be at least 6 characters";
-          if (label == "Confirm Password" && value != passwordController.text)
+          }
+
+          if (label == "Confirm Password" && value != passwordController.text) {
             return "Passwords do not match";
+          }
+
           return null;
         },
       ),

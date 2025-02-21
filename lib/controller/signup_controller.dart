@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:cottonist/views/dashboards/director_dashboard.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,7 @@ class SignupController extends GetxController {
       password, role, File image) async {
     isLoading.value = true;
     try {
-      String url = 'https://www.shreshtacotton.com/api/signup/';
+      String url = '${dotenv.env['API_URL']}/api/signup/';
 
       var request = http.MultipartRequest('POST', Uri.parse(url));
       request.fields.addAll({

@@ -6,10 +6,10 @@ class ShowpredictionQR extends StatefulWidget {
   ShowpredictionQR({required this.mapGrader});
 
   @override
-  State<ShowpredictionQR> createState() => _showpredictionPageState();
+  State<ShowpredictionQR> createState() => showpredictionPageState();
 }
 
-class _showpredictionPageState extends State<ShowpredictionQR> {
+class showpredictionPageState extends State<ShowpredictionQR> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

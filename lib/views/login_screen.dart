@@ -1,11 +1,10 @@
-import 'package:cottonist/credentials/auth_preference.dart';
 import 'package:cottonist/views/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:cottonist/controller/login_controller.dart';
 
 class LoginScreen extends StatefulWidget {
-  LoginScreen({super.key});
+  const LoginScreen({super.key});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -17,8 +16,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>(); // Form key to manage validation
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  
-  
+
   void validateAndLogin() {
     if (_formKey.currentState!.validate()) {
       loginController.login(usernameController.text, passwordController.text);
@@ -60,7 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(20),
-                boxShadow: [
+                boxShadow: const [
                   BoxShadow(
                     color: Colors.black12,
                     blurRadius: 10,
@@ -74,15 +72,15 @@ class _LoginScreenState extends State<LoginScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text("Login Account",
-                        style:
-                            TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold)),
                     const SizedBox(height: 15),
 
                     // Username Field
                     TextFormField(
                       controller: usernameController,
                       decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.person_2_outlined),
+                        prefixIcon: const Icon(Icons.person_2_outlined),
                         labelText: "Username",
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10)),
@@ -94,14 +92,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         return null;
                       },
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
 
                     // Password Field
                     Obx(() => TextFormField(
                           controller: passwordController,
                           obscureText: loginController.isPasswordHidden.value,
                           decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.lock_outline),
+                            prefixIcon: const Icon(Icons.lock_outline),
                             labelText: "Password",
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10)),
@@ -127,7 +125,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             return null;
                           },
                         )),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
 
                     // Forgot Password
                     SizedBox(
@@ -159,12 +157,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                               )
                             : ElevatedButton(
-                                onPressed: validateAndLogin, // Call validation method
+                                onPressed:
+                                    validateAndLogin, // Call validation method
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: Color(0xFF65B845),
+                                  backgroundColor: const Color(0xFF65B845),
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10)),
-                                  padding: EdgeInsets.symmetric(vertical: 12),
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 12),
                                 ),
                                 child: const Text("Login Account",
                                     style: TextStyle(
@@ -172,7 +172,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                       ),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                   ],
                 ),
               ),

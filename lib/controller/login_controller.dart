@@ -1,6 +1,7 @@
 import 'package:cottonist/credentials/auth_preference.dart';
 import 'package:cottonist/views/dashboards/director_dashboard.dart';
 import 'package:cottonist/views/dashboards/grader_dashboard.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,7 +13,7 @@ class LoginController extends GetxController {
   RxString accessToken = "".obs;
   final authPreferences = Get.put(AuthPreferences());
   Future<void> login(String username, String password) async {
-    String url = 'https://www.shreshtacotton.com/api/login/';
+    String url = '${dotenv.env['API_URL']}/api/login/';
     isLoading.value = true;
     try {
       var response = await http.post(Uri.parse(url),

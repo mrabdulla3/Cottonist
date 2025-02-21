@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:cottonist/controller/login_controller.dart';
 import 'package:cottonist/credentials/auth_preference.dart';
 import 'package:cottonist/views/grader/showPredictionImage.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
@@ -43,8 +43,10 @@ class TestQualityMetricsController extends GetxController {
 
     if (decodedImage != null) {
       // Resize and compress image
-      img.Image resizedImage = img.copyResize(decodedImage, width: 800); // Resize if necessary
-      List<int> compressedBytes = img.encodeJpg(resizedImage, quality: 70); // Adjust quality
+      img.Image resizedImage =
+          img.copyResize(decodedImage, width: 800); // Resize if necessary
+      List<int> compressedBytes =
+          img.encodeJpg(resizedImage, quality: 70); // Adjust quality
 
       // Save compressed image to file
       File compressedFile = File(file.path)..writeAsBytesSync(compressedBytes);
@@ -66,8 +68,7 @@ class TestQualityMetricsController extends GetxController {
       return;
     }
 
-    var url =
-        Uri.parse("https://www.shreshtacotton.com/api/upload-and-predict/");
+    var url = Uri.parse("${dotenv.env['API_URL']}/api/upload-and-predict/");
     try {
       var request = http.MultipartRequest('POST', url);
       request.headers['Authorization'] = 'Bearer ${auth.accessToken}';
@@ -98,7 +99,6 @@ class TestQualityMetricsController extends GetxController {
         Get.snackbar("Success", "Analysis Complete!");
         selectedImage.value = null;
         Get.to(() => ShowPredictionImage(mapGrader: MapPred));
-
       } else {
         Get.snackbar("Error", "Failed to analyze image.");
       }

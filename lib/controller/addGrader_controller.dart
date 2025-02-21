@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,7 @@ class AddgraderController extends GetxController {
       password, role, Uint8List image) async {
     isLoading.value = true;
     try {
-      String url = 'https://www.shreshtacotton.com/api/director/add-grader/';
+      String url = '${dotenv.env['API_URL']}/api/director/add-grader/';
 
       var response = await http.post(
         Uri.parse(url),
