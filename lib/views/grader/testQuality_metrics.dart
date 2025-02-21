@@ -26,7 +26,7 @@ class _TestQualityMetricsScreenState extends State<TestQualityMetricsScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFFF7F3E8),
       appBar: AppBar(
-        backgroundColor: Color(0xFF65B845),
+        backgroundColor: const Color(0xFF65B845),
         title: Center(
           child: Text("Test Quality Metrics",
               style: GoogleFonts.lato(

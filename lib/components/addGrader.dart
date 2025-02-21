@@ -38,19 +38,12 @@ class AddGraderState extends State<AddGrader> {
           child: Column(
             children: [
               SizedBox(height: screenHeight * 0.1),
-              // Logo
               Center(
-                child: Image.asset(
-                  'assets/images/logo.png',
-                  height: screenHeight * 0.15,
-                  width: screenWidth * 0.3,
+                child: Text(
+                  "Grader Form",
+                  style: GoogleFonts.aboreto(
+                      fontWeight: FontWeight.w700, fontSize: 23),
                 ),
-              ),
-              SizedBox(height: screenHeight * 0.02),
-              Text(
-                "Grader Form",
-                style: GoogleFonts.aboreto(
-                    fontWeight: FontWeight.w700, fontSize: 23),
               ),
 
               SizedBox(height: screenHeight * 0.03),
